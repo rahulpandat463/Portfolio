@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sushil Nayak - 3D/Graphic Designer Portfolio</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    
+    <style>
+        /* ------------------------------------------- */
+        /* GLOBAL STYLES & TRANSITION SETUP */
+        /* ------------------------------------------- */
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+            --neon-pink: #ff4d4d;
+            --text-color: var(--white);
+            --bg-color: var(--black);
+            --font-main: 'Montserrat', sans-serif;
+            --font-secondary: 'Poppins', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            margin: 0;
+            background: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            /* SCROLL SNAP REMOVED - GSAP will handle transitions */
+            scroll-behavior: smooth; 
+        }
+        
+        * {
+            box-sizing: border-box;
+            transition: color 0.3s, background-color 0.3s, border-color 0.3s;
+        }
+
+        /* ------------------------------------------- */
+        /* HEADER & NAVIGATION (Unchanged) */
+        /* ------------------------------------------- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 40px;
+            z-index: 100;
+        }
+
+        header h2 {
+            font-family: var(--font-main);
+            font-weight: 900;
+            font-size: 1.5em;
+            color: var(--white);
+        }
+
+        nav a {
+            margin-left: 30px;
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            position: relative;
+            opacity: 0.8;
+        }
+
+        nav a:hover {
+            color: var(--neon-pink);
+            opacity: 1;
+        }
+        
+        /* ------------------------------------------- */
+        /* SECTION BASE STYLES */
+        /* ------------------------------------------- */
+        .section {
+            min-height: 100vh; /* Changed height to min-height for content flexibility */
+            width: 100%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden; 
+            
+            /* Initial state for GSAP animation (Hidden, will be revealed by JS) */
+            opacity: 1; 
+            transform: translateY(50px);
+        }
+        
+        /* ------------------------------------------- */
+        /* TEXT & COMPONENT STYLING (Unchanged - Focus on visuals) */
+        /* ------------------------------------------- */
+        .hero h1 {
+            font-family: var(--font-main);
+            font-size: 8vw;
+            margin: 0;
+            line-height: 0.9;
+            font-weight: 900;
+            text-shadow: 0 0 10px var(--neon-pink); 
+        }
+        
+        .hero h1 span {
+            color: var(--neon-pink); 
+        }
+
+        .section h2 {
+            font-family: var(--font-main);
+            font-size: 6vw;
+            margin-bottom: 50px;
+            letter-spacing: 5px;
+            -webkit-text-stroke: 1px var(--white);
+            color: transparent; 
+            text-align: center;
+        }
+        
+        .hero img {
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 30px 0;
+            box-shadow: 0 0 60px rgba(255, 77, 77, 0.4);
+            transition: transform 0.3s;
+            cursor: pointer; 
+        }
+
+        .magnetic-btn {
+            padding: 15px 40px;
+            background-color: var(--neon-pink);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1em;
+            box-shadow: 0 0 15px rgba(255, 77, 77, 0.6);
+            transition: background-color 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .project-row {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #090909;
+            margin: 10px 0;
+            padding: 15px 25px;
+            border-radius: 15px;
+            border: 1px solid #333;
+            transition: all 0.4s ease-in-out;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+        
+        .project-row:hover {
+            background: #1a1a1a;
+            transform: translateX(10px);
+            box-shadow: 0 0 25px rgba(255, 77, 77, 0.2);
+        }
+        
+        .project-images img {
+            width: 150px; 
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid var(--neon-pink);
+        }
+        
+        #testimonials .card-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+        }
+        
+        #testimonials .card {
+            background: #111;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        footer {
+            position: sticky; /* Changed to sticky for better flow */
+            bottom: 0;
+            width: 100%;
+            background: var(--black);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9em;
+            z-index: 90;
+            border-top: 1px solid #1a1a1a;
+        }
+        
+    </style>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // 1. GSAP: SCROLL SECTION ANIMATION (Fade-in on scroll)
+            // This is the core fix to prevent blank screens.
+            // We use Intersection Observer logic but implemented through GSAP ScrollTrigger.
+
+            gsap.utils.toArray(".section").forEach((section, i) => {
+                if (i === 0) {
+                    // First section: animate immediately
+                    gsap.from(section, {
+                        opacity: 1,
+                        y: 50,
+                        duration: 1.2,
+                        ease: "power3.out",
+                        delay: 0.5 // Small delay to ensure DOM is ready
+                    });
+                } else {
+                    gsap.from(section, {
+                        opacity: 1,
+                        y: 50,
+                        duration: 1.2,
+                        ease: "power3.out",
+                        scrollTrigger: {
+                            trigger: section,
+                            start: "top 85%", // Start animation when section is 85% into viewport
+                            end: "bottom center",
+                            toggleActions: "play none none none", // Play once on scroll down
+                        }
+                    });
+                }
+            });
+
+            // 2. MAGNETIC BUTTON EFFECT (Unchanged)
+            const magneticMove = (e, target) => {
+                const rect = target.getBoundingClientRect();
+                const center = {
+                    x: rect.left + rect.width / 2,
+                    y: rect.top + rect.height / 2
+                };
+                
+                const x = (e.clientX - center.x) * 0.2; 
+                const y = (e.clientY - center.y) * 0.2; 
+
+                gsap.to(target, {
+                    x: x,
+                    y: y,
+                    duration: 0.5,
+                    ease: "power2.out"
+                });
+            };
+
+            const magneticReset = (target) => {
+                gsap.to(target, {
+                    x: 0,
+                    y: 0,
+                    duration: 0.5,
+                    ease: "elastic.out(1, 0.3)"
+                });
+            };
+            
+            // Apply magnetic effect to all buttons and image
+            document.querySelectorAll('.magnetic-btn, .hero img').forEach(el => {
+                el.addEventListener('mousemove', (e) => magneticMove(e, el));
+                el.addEventListener('mouseleave', () => magneticReset(el));
+            });
+            
+            // 3. Simple Project Row Animation (Fixed)
+            gsap.utils.toArray(".project-row").forEach((row, i) => {
+                gsap.from(row, {
+                    opacity: 0,
+                    x: -50,
+                    duration: 0.6,
+                    delay: i * 0.1,
+                    scrollTrigger: {
+                        trigger: row,
+                        start: "top 90%",
+                        toggleActions: "play none none none",
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h2>SHUSHIL.</h2>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#portfolio">Projects</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <section id="home" class="hero section">
+        <p style="font-size: 1.2em; opacity: 0.7;">WANT TO BUILD A STUNNING PORTFOLIO SITE FOR YOUR CLIENT?</p>
+        <h1>HI, I'M <span>SUSHIL</span></h1>
+        <p style="font-size: 1.2em; letter-spacing: 3px;">A 3D Designer passionate about crafting bold and memorable projects.</p>
+        <img src="3d Model.png" alt="3D Profile Render" /> 
+        <a href="#contact" class="magnetic-btn">CONTACT ME</a>
+    </section>
+
+    <section id="about" class="section">
+        <h2>ABOUT ME</h2>
+        <div class="card" style="max-width: 700px; text-align: center; background: #090909; padding: 40px; border-radius: 15px; border: 1px solid #333;">
+            <p style="font-size: 1.1em; margin-bottom: 20px;">
+                With over five years of experience in design, I specialize in branding, web design, and user experience. I love collaborating with businesses that want to stand out and showcase their best side.
+            </p>
+            <p>
+                My expertise includes 3D modeling, texturing, lighting, rendering, and high-impact social media creative design using Photoshop, Illustrator, and Canva. Let's create something amazing together!
+            </p>
+            <a href="#contact" class="magnetic-btn" style="margin-top: 30px;">CONTACT ME</a>
+        </div>
+    </section>
+
+    <section id="services" class="section">
+        <h2>SERVICES</h2>
+        <div class="card-container" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; max-width: 900px; text-align: left;">
+            <div class="service-item" style="border-bottom: 1px solid #333; padding-bottom: 20px;">
+                <h3 style="color: var(--neon-pink); font-size: 2em; margin: 0;">01</h3>
+                <h4 style="font-size: 1.5em; margin: 5px 0 10px 0;">Branding & Identity</h4>
+                <p>Unique brand strategies and visual identities that resonate with your target audience.</p>
+            </div>
+            <div class="service-item" style="border-bottom: 1px solid #333; padding-bottom: 20px;">
+                <h3 style="color: var(--neon-pink); font-size: 2em; margin: 0;">02</h3>
+                <h4 style="font-size: 1.5em; margin: 5px 0 10px 0;">3D Modeling & Animation</h4>
+                <p>High-quality 3D assets for product visualization, marketing, and dynamic character designs.</p>
+            </div>
+            <div class="service-item" style="border-bottom: 1px solid #333; padding-bottom: 20px;">
+                <h3 style="color: var(--neon-pink); font-size: 2em; margin: 0;">03</h3>
+                <h4 style="font-size: 1.5em; margin: 5px 0 10px 0;">Product Design & Ads</h4>
+                <p>Conceptualizing and designing packaging, product showcases, and high-impact social media ads.</p>
+            </div>
+            <div class="service-item" style="border-bottom: 1px solid #333; padding-bottom: 20px;">
+                <h3 style="color: var(--neon-pink); font-size: 2em; margin: 0;">04</h3>
+                <h4 style="font-size: 1.5em; margin: 5px 0 10px 0;">Custom Graphic Design</h4>
+                <p>Creating custom graphics for websites, print media, and merchandise (e.g., T-shirt designs).</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="section" style="justify-content: flex-start; padding-top: 80px;">
+        <h2>PROJECTS</h2>
+        
+        <div class="project-row">
+            <div class="details">
+                <span class="index">01</span>
+                <div>
+                    <p class="client-name">CLIENT: Philips (3000 Series)</p>
+                    <p>Project: Social Media Product Advertisement</p>
+                </div>
+            </div>
+            <div class="project-images">
+                <img src="PHLIPS.jpg" alt="Philips Ad" />
+            </div>
+            <a href="#" class="live-link magnetic-btn">LIVE PROJECT</a>
+        </div>
+        
+        <div class="project-row">
+            <div class="details">
+                <span class="index">02</span>
+                <div>
+                    <p class="client-name">CLIENT: Lenskart (Nazron Ko Qaid)</p>
+                    <p>Project: High-Impact Creative Ad Design</p>
+                </div>
+            </div>
+            <div class="project-images">
+                <img src="GLASEE.jpg" alt="Lenskart Ad" />
+            </div>
+            <a href="#" class="live-link magnetic-btn">LIVE PROJECT</a>
+        </div>
+        
+        <div class="project-row">
+            <div class="details">
+                <span class="index">03</span>
+                <div>
+                    <p class="client-name">CLIENT: Fabrilife (T-Shirt Premium)</p>
+                    <p>Project: Merchandise Promotion Creative</p>
+                </div>
+            </div>
+            <div class="project-images">
+                <img src="farilife.jpg" alt="Fabrilife Ad" />
+            </div>
+            <a href="#" class="live-link magnetic-btn">LIVE PROJECT</a>
+        </div>
+        
+        <div class="project-row">
+            <div class="details">
+                <span class="index">04</span>
+                <div>
+                    <p class="client-name">CLIENT: Haldiram's (NAM)</p>
+                    <p>Project: Social Media Engagement Game</p>
+                </div>
+            </div>
+            <div class="project-images">
+                <img src="NAM.jpg" alt="Haldiram's Ad" />
+            </div>
+            <a href="#" class="live-link magnetic-btn">LIVE PROJECT</a>
+        </div>
+        
+        <div class="project-row">
+            <div class="details">
+                <span class="index">05</span>
+                <div>
+                    <p class="client-name">CLIENT: Bansusu (Happy Bags)</p>
+                    <p>Project: Kids Product Launch Campaign</p>
+                </div>
+            </div>
+            <div class="project-images">
+                <img src="bag post.jpg" alt="Bansusu Ad" />
+            </div>
+            <a href="#" class="live-link magnetic-btn">LIVE PROJECT</a>
+        </div>
+    </section>
+
+    <section id="testimonials" class="section">
+        <h2>WHAT CLIENTS ARE SAYING</h2>
+        <div class="card-container">
+            <div class="card">
+                <p>"Sushil delivered a 3D model that exceeded our expectations. The attention to detail was flawless!"</p>
+                <p style="color: var(--neon-pink); margin-top: 10px;">— Alex T., Creative Director</p>
+            </div>
+            <div class="card">
+                <p>"The social media creatives for our product launch were incredible and highly engaging. Highly recommend."</p>
+                <p style="color: var(--neon-pink); margin-top: 10px;">— Dr. A. Khan, Marketing Head</p>
+            </div>
+            <div class="card">
+                <p>"The game we created was an instant hit! Sushil perfectly captured the vision and brought it to life."</p>
+                <p style="color: var(--neon-pink); margin-top: 10px;">— Priya S., Brand Manager</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <h2 style="margin-bottom: 20px;">LET'S GET IN TOUCH</h2>
+        <div class="contact-info">
+            <p>EMAIL: <span style="color: var(--neon-pink);">sushilnayak5@gmail.com</span></p>
+            <p>PHONE: +91 XXXXX XXXXX</p>
+        </div>
+        <form style="display: flex; gap: 20px; flex-wrap: wrap; max-width: 600px;">
+            <input type="text" placeholder="Full Name" required style="flex: 1 1 48%;">
+            <input type="email" placeholder="Email Address" required style="flex: 1 1 48%;">
+            <textarea placeholder="Your Message" rows="4" style="flex: 1 1 100%; padding: 15px; border: 2px solid #555; border-radius: 8px; background: #1e1e1e; color: var(--white); font-family: var(--font-secondary); font-size: 1em; outline: none;"></textarea>
+            <button type="submit" class="magnetic-btn" style="flex: 1 1 100%; margin-top: 0; padding: 15px;">SEND MESSAGE</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>SHUSHIL NAYAK</p>
+        <div class="footer-nav">
+            <a href="#">SOCIAL</a>
+            <a href="#">CONTACT</a>
+            <a href="#">RESUME</a>
+        </div>
+    </footer>
+</body>
+</html>

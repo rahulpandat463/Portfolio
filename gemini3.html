@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+       
+    <meta charset="UTF-8" />
+       
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Sushil Nayak - 3D/Graphic Designer Portfolio</title>
+       
+       
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Poppins:wght@300;400;600&display=swap"
+        rel="stylesheet">
+       
+       
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+       
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+       
+        <style>
+        /* ------------------------------------------- */
+        /* GLOBAL STYLES & TRANSITION SETUP */
+        /* ------------------------------------------- */
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+            --neon-pink: #ff4d4d;
+            --text-color: var(--white);
+            --bg-color: var(--black);
+            --font-main: 'Montserrat', sans-serif;
+            --font-secondary: 'Poppins', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            margin: 0;
+            background: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        * {
+            box-sizing: border-box;
+            transition: color 0.3s, background-color 0.3s, border-color 0.3s;
+        }
+
+        /* ------------------------------------------- */
+        /* HEADER & NAVIGATION (Unchanged) */
+        /* ------------------------------------------- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 40px;
+            z-index: 100;
+        }
+
+        header h2 {
+            font-family: var(--font-main);
+            font-weight: 900;
+            font-size: 1.5em;
+            color: var(--white);
+        }
+
+        nav a {
+            margin-left: 30px;
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            position: relative;
+            opacity: 0.8;
+        }
+
+        nav a:hover {
+            color: var(--neon-pink);
+            opacity: 1;
+        }
+
+        /* ------------------------------------------- */
+        /* SECTION BASE STYLES */
+        /* ------------------------------------------- */
+        .section {
+            min-height: 100vh;
+            width: 100%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+
+            opacity: 1;
+            transform: translateY(50px);
+        }
+
+        /* ------------------------------------------- */
+        /* ABOUT SECTION STYLES (Kept updated) */
+        /* ------------------------------------------- */
+        .about-container {
+            display: flex;
+            flex-direction: row;
+            max-width: 1200px;
+            width: 100%;
+            gap: 60px;
+            align-items: flex-start;
+            padding-top: 20px;
+        }
+
+        .about-image-wrapper {
+            flex: 0 0 400px;
+            text-align: center;
+        }
+
+        .about-image {
+            width: 100%;
+            max-width: 350px;
+            height: 350px;
+            border-radius: 15px;
+            object-fit: cover;
+            border: 3px solid var(--neon-pink);
+            box-shadow: 0 0 20px rgba(255, 77, 77, 0.4);
+            display: block;
+            margin: 0 auto 20px auto;
+        }
+
+        .about-content {
+            flex: 1;
+            background: #090909;
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid #333;
+            align-self: stretch;
+        }
+
+        .about-content h3 {
+            font-family: var(--font-main);
+            color: var(--neon-pink);
+            font-size: 2em;
+            margin-top: 0;
+        }
+
+        @media (max-width: 900px) {
+            .about-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 30px;
+            }
+
+            .about-image-wrapper {
+                flex: none;
+            }
+        }
+
+
+        /* ------------------------------------------- */
+        /* NEW: SKILLS SLIDER STYLES */
+        /* ------------------------------------------- */
+        #skills {
+            min-height: 100vh;
+            padding: 40px 0;
+            /* Padding adjust for full-width slider */
+            justify-content: flex-start;
+        }
+
+        #skills h2 {
+            margin-top: 80px;
+            margin-bottom: 30px;
+        }
+
+        .skills-wrapper {
+            width: 100%;
+            overflow-x: scroll;
+            /* Enable horizontal scrolling */
+            display: flex;
+            gap: 40px;
+            padding: 20px 40px 60px 40px;
+            /* Space for shadow/overflow */
+            scroll-snap-type: x mandatory;
+            /* Snap to cards */
+            -ms-overflow-style: none;
+            /* Hide scrollbar for IE and Edge */
+            scrollbar-width: none;
+            /* Hide scrollbar for Firefox */
+        }
+
+        .skills-wrapper::-webkit-scrollbar {
+            display: none;
+            /* Hide scrollbar for Chrome, Safari and Opera */
+        }
+
+        .skill-card {
+            flex: 0 0 350px;
+            /* Fixed card width */
+            height: 450px;
+            position: relative;
+            background-color: #111;
+            border-radius: 20px;
+            overflow: hidden;
+            scroll-snap-align: center;
+            cursor: pointer;
+            transition: transform 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .skill-card-content {
+            padding: 25px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            color: var(--white);
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0));
+        }
+
+        .skill-card-content h3 {
+            font-family: var(--font-main);
+            font-size: 1.8em;
+            margin: 0;
+            color: var(--white);
+        }
+
+        .skill-card img.background-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0.6;
+            transition: opacity 0.4s;
+        }
+
+        .skill-card:hover img.background-image {
+            opacity: 1;
+        }
+
+        /* Detail Panel - Video-style animation logic */
+        .skill-detail-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 150;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            clip-path: inset(100% 0 0 0);
+            /* Initial state: hidden from bottom */
+            opacity: 0;
+        }
+
+        .detail-content {
+            display: flex;
+            max-width: 1100px;
+            width: 90%;
+            background: #1e1e1e;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 50px rgba(255, 77, 77, 0.5);
+        }
+
+        .detail-image {
+            flex: 0 0 400px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .detail-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .detail-text {
+            flex: 1;
+            padding: 50px;
+        }
+
+        .detail-text h3 {
+            font-family: var(--font-main);
+            font-size: 3em;
+            color: var(--neon-pink);
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .detail-text p {
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+            color: var(--white);
+            cursor: pointer;
+            z-index: 200;
+        }
+
+        /* ------------------------------------------- */
+        /* REST OF STYLES (Unchanged) */
+        /* ------------------------------------------- */
+        .hero h1 {
+            font-family: var(--font-main);
+            font-size: 8vw;
+            margin: 0;
+            line-height: 0.9;
+            font-weight: 900;
+            text-shadow: 0 0 10px var(--neon-pink);
+        }
+
+        .hero h1 span {
+            color: var(--neon-pink);
+        }
+
+        .section h2 {
+            font-family: var(--font-main);
+            font-size: 6vw;
+            margin-bottom: 50px;
+            letter-spacing: 5px;
+            -webkit-text-stroke: 1px var(--white);
+            color: transparent;
+            text-align: center;
+        }
+
+        .hero img {
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 30px 0;
+            box-shadow: 0 0 60px rgba(255, 77, 77, 0.4);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .magnetic-btn {
+            padding: 15px 40px;
+            background-color: var(--neon-pink);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1em;
+            box-shadow: 0 0 15px rgba(255, 77, 77, 0.6);
+            transition: background-color 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .project-row {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #090909;
+            margin: 10px 0;
+            padding: 15px 25px;
+            border-radius: 15px;
+            border: 1px solid #333;
+            transition: all 0.4s ease-in-out;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+
+        .project-row:hover {
+            background: #1a1a1a;
+            transform: translateX(10px);
+            box-shadow: 0 0 25px rgba(255, 77, 77, 0.2);
+        }
+
+        .project-images img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid var(--neon-pink);
+        }
+
+        #testimonials .card-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+        }
+
+        #testimonials .card {
+            background: #111;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        footer {
+            position: sticky;
+            bottom: 0;
+            width: 100%;
+            background: var(--black);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9em;
+            z-index: 90;
+            border-top: 1px solid #1a1a1a;
+        }
+    </style>
+       
+       
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // 1. GSAP: SCROLL SECTION ANIMATION (Fade-in on scroll)
+            gsap.utils.toArray(".section").forEach((section, i) => {
+                if (i === 0) {
+                    gsap.from(section, {
+                        opacity: 1,
+                        y: 50,
+                        duration: 1.2,
+                        ease: "power3.out",
+                        delay: 0.5
+                    });
+                } else {
+                    gsap.from(section, {
+                        opacity: 1,
+                        y: 50,
+                        duration: 1.2,
+                        ease: "power3.out",
+                        scrollTrigger: {
+                            trigger: section,
+                            start: "top 85%",
+                            end: "bottom center",
+                            toggleActions: "play none none none",
+                        }
+                    });
+                }
+            });
+
+            // 2. MAGNETIC BUTTON EFFECT (Unchanged)
+            const magneticMove = (e, target) => {
+                const rect = target.getBoundingClientRect();
+                const center = {
+                    x: rect.left + rect.width / 2,
+                    y: rect.top + rect.height / 2
+                };
+
+                const x = (e.clientX - center.x) * 0.2;
+                const y = (e.clientY - center.y) * 0.2;
+
+                gsap.to(target, {
+                    x: x,
+                    y: y,
+                    duration: 0.5,
+                    ease: "power2.out"
+                });
+            };
+
+            const magneticReset = (target) => {
+                gsap.to(target, {
+                    x: 0,
+                    y: 0,
+                    duration: 0.5,
+                    ease: "elastic.out(1, 0.3)"
+                });
+            };
+
+            document.querySelectorAll('.magnetic-btn, .hero img').forEach(el => {
+                el.addEventListener('mousemove', (e) => magneticMove(e, el));
+                el.addEventListener('mouseleave', () => magneticReset(el));
+            });
+
+            // 3. Simple Project Row Animation (Fixed)
+            gsap.utils.toArray(".project-row").forEach((row, i) => {
+                gsap.from(row, {
+                    opacity: 0,
+                    x: -50,
+                    duration: 0.6,
+                    delay: i * 0.1,
+                    scrollTrigger: {
+                        trigger: row,
+                        start: "top 90%",
+                        toggleActions: "play none none none",
+                    }
+                });
+            });
+
+            // 4. NEW: SKILL DETAIL PANEL ANIMATION (Video Effect)
+            const detailPanel = document.getElementById('skillDetailPanel');
+            const closeBtn = document.getElementById('closeDetail');
+            const detailImage = detailPanel.querySelector('.detail-image img');
+            const detailTitle = detailPanel.querySelector('#detailTitle');
+            const detailDescription = detailPanel.querySelector('#detailDescription');
+            const detailSoftware = detailPanel.querySelector('#detailSoftware');
+
+            const skillData = [
+                { id: 'blender', title: 'Blender 3D', movie: '3D Modeling & Rendering', image: 'blender-bg.jpg', description: 'Blender is my primary tool for all 3D asset creation, environment design, and complex rendering tasks. I specialize in optimized low-poly and high-detail mesh work.', software: 'Modeling, Texturing, Animation' },
+                { id: 'photoshop', title: 'Adobe Photoshop', movie: 'Digital Painting & Retouching', image: 'photoshop-bg.jpg', description: 'Expert level in photo manipulation, color grading, detailed retouching, and creating high-quality concept art for client projects and social media campaigns.', software: 'Photo Editing, Concept Art, UI Mockups' },
+                { id: 'illustrator', title: 'Adobe Illustrator', movie: 'Vector Graphics & Branding', image: 'illustrator-bg.jpg', description: 'I use Illustrator to develop scalable brand identities, logos, and intricate vector illustrations. Essential for packaging and print-ready designs.', software: 'Logo Design, Vector Illustration, Typography' },
+                { id: 'canva', title: 'Canva', movie: 'Quick Social Media Assets', image: 'canva-bg.jpg', description: 'For rapid prototyping and high-volume content creation for social media platforms, Canva allows for efficiency without compromising aesthetic standards.', software: 'Templates, Social Media Graphics, Presentations' },
+            ];
+
+            function openDetail(data) {
+                detailImage.src = data.image; // Assuming you have these images
+                detailImage.alt = data.title;
+                detailTitle.textContent = data.title;
+                detailDescription.textContent = data.description;
+                detailSoftware.textContent = data.software;
+
+                // GSAP Animation: Slide up effect
+                gsap.to(detailPanel, {
+                    opacity: 1,
+                    duration: 0.6,
+                    ease: "power3.inOut",
+                    onStart: () => {
+                        detailPanel.style.display = 'flex';
+                    },
+                    clipPath: "inset(0% 0% 0% 0%)" // Reveal from top
+                });
+            }
+
+            function closeDetail() {
+                // GSAP Animation: Slide down effect
+                gsap.to(detailPanel, {
+                    opacity: 0,
+                    duration: 0.6,
+                    ease: "power3.inOut",
+                    clipPath: "inset(100% 0% 0% 0%)", // Hide to bottom
+                    onComplete: () => {
+                        detailPanel.style.display = 'none';
+                    }
+                });
+            }
+
+            document.querySelectorAll('.skill-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const skillId = card.getAttribute('data-skill-id');
+                    const data = skillData.find(s => s.id === skillId);
+                    if (data) {
+                        openDetail(data);
+                    }
+                });
+            });
+
+            closeBtn.addEventListener('click', closeDetail);
+
+        });
+    </script>
+</head>
+
+<body>
+        <header>
+                <h2>SHUSHIL.</h2>
+                <nav>
+                        <a href="#home">Home</a>
+                        <a href="#about">About</a>
+                        <a href="#skills">Skills</a>             <a href="#services">Services</a>
+                        <a href="#portfolio">Projects</a>
+                        <a href="#contact">Contact</a>
+                    </nav>
+            </header>
+
+        <section id="home" class="hero section">
+                <p style="font-size: 1.2em; opacity: 0.7;">WANT TO BUILD A STUNNING PORTFOLIO SITE FOR YOUR CLIENT?</p>
+                <h1>HI, I'M <span>SUSHIL</span></h1>
+                <p style="font-size: 1.2em; letter-spacing: 3px;">A 3D Designer passionate about crafting bold and
+            memorable projects.</p>
+                <img src="3d Model.png" alt="3D Profile Render" />
+                <a href="#contact" class="magnetic-btn">CONTACT ME</a>
+            </section>
+
+        <section id="about" class="section">
+        <h2>ABOUT ME</h2>
+        <div class="about-container">
+            <div class="about-image-wrapper">
+                <img src="WhatsApp Image 2025-12-12 at 21.22.34_fed18076.jpg" alt="Sushil Nayak Profile Picture"
+                    class="about-image" />
+                <p style="font-family: var(--font-main); font-size: 1.5em; font-weight: 700; color: var(--neon-pink);">
+                    SUSHIL NAYAK</p>
+                <p>3D & Graphic Designer</p>
+            </div>
+
+            <div class="about-content">
+                <p>
+                    I’m a passionate Graphic Designer with a strong interest in creating visuals that are clean,
+                    meaningful, and creatively impactful. As a fresher, I focus on learning, experimenting, and
+                    delivering designs that connect with the audience.
+
+                    I enjoy working across branding, logo design, packaging, magazine layouts, and social media
+                    graphics, bringing ideas to life through thoughtful design decisions. My goal is simple—to create
+                    designs that not only look good but communicate clearly.
+
+                    With hands-on experience in leading tools like Photoshop, Illustrator, InDesign, CorelDRAW, Premiere
+                    Pro, and Canva, I love exploring different styles and concepts to produce fresh and engaging work .
+                    I aim to collaborate with brands, startups, and creators to build thoughtful and engaging visual
+                    experiences that leave a lasting impression.
+                </p>
+
+                <h4 style="margin-top: 30px; border-bottom: 1px solid #333; padding-bottom: 10px;">KEY SKILLS</h4>
+                <ul style="list-style-type: none; padding: 0; display: flex; flex-wrap: wrap; gap: 15px;">
+                    <li
+                        style="background: var(--neon-pink); color: var(--black); padding: 5px 12px; border-radius: 5px; font-weight: 600;">
+                        3D Modeling</li>
+                    <li style="background: #333; color: var(--white); padding: 5px 12px; border-radius: 5px;">Branding
+                    </li>
+                    <li
+                        style="background: var(--neon-pink); color: var(--black); padding: 5px 12px; border-radius: 5px; font-weight: 600;">
+                        Photoshop</li>
+                    <li style="background: #333; color: var(--white); padding: 5px 12px; border-radius: 5px;">UX/UI
+                        Basics</li>
+                </ul>
+
+                <a href="#contact" class="magnetic-btn" style="margin-top: 30px; display: inline-block;">HIRE ME</a>
+            </div>
+        </div>
+    </section>
+
+        <section id="skills" class="section">
+                <h2>SOFTWARE & EXPERTISE</h2>
+        <div class="skills-wrapper">
+            <div class="skill-card" data-skill-id="blender">
+                <img src="3d Model 4.png" alt="Blender Background" class="background-image">
+                <div class="skill-card-content">
+                    <p style="opacity: 0.7;">3D Modeling</p>
+                    <h3>Blender 3D</h3>
+                    <p style="color: var(--neon-pink);">Specializing in Product Visualization</p>
+                </div>
+            </div>
+
+            <div class="skill-card" data-skill-id="photoshop">
+                <img src="3d Model 7.png" alt="Photoshop Background" class="background-image">
+                <div class="skill-card-content">
+                    <p style="opacity: 0.7;">Graphic Design</p>
+                    <h3>Adobe Photoshop</h3>
+                    <p style="color: var(--neon-pink);">Mastering Retouching & Compositing</p>
+                </div>
+            </div>
+
+            <div class="skill-card" data-skill-id="illustrator">
+                <img src="3d Model 6.png" alt="Illustrator Background" class="background-image">
+                <div class="skill-card-content">
+                    <p style="opacity: 0.7;">Branding</p>
+                    <h3>Adobe Illustrator</h3>
+                    <p style="color: var(--neon-pink);">Vector Art & Logo Development</p>
+                </div>
+            </div>
+
+            <div class="skill-card" data-skill-id="canva">
+                <img src="3d Model 5.png" alt="Canva Background" class="background-image">
+                <div class="skill-card-content">
+                    <p style="opacity: 0.7;">Social Media</p>
+                    <h3>Canva</h3>
+                    <p style="color: var(--neon-pink);">Fast & Efficient Asset Creation</p>
+                </div>
+            </div>
+            <div class="skill-card" data-skill-id="canva">
+                <img src="3d Model 5.png" alt="Canva Background" class="background-image">
+                <div class="skill-card-content">
+                    <p style="opacity: 0.7;">Social Media</p>
+                    <h3>Canva</h3>
+                    <p style="color: var(--neon-pink);">Fast & Efficient Asset Creation</p>
+                </div>
+            </div>
+
+            <div class="skill-card" data-skill-id="canva">
+                <img src="3d Model 5.png" alt="Canva Background" class="background-image">
+                <div class="skill-card-content">
+                    <p style="opacity: 0.7;">Social Media</p>
+                    <h3>Canva</h3>
+                    <p style="color: var(--neon-pink);">Fast & Efficient Asset Creation</p>
+                </div>
+            </div>
+
+
+        </div>
+           
+    </section>
+
+    <div id="skillDetailPanel" class="skill-detail-panel" style="display: none;">
+        <span id="closeDetail" class="close-btn">X</span>
+        <div class="detail-content">
+            <div class="detail-image">
+                <img id="detailImage" src="" alt="Skill Image" />
+            </div>
+
+            <div class="detail-text">
+                <p style="font-size: 1.2em; opacity: 0.7; margin-bottom: 5px;">3D & Graphic Design Tool</p>
+                <h3 id="detailTitle">Software Name</h3>
+                <p style="font-size: 1.1em; color: var(--neon-pink);">Areas of Expertise: <span
+                        id="detailSoftware">Loading...</span></p>
+                <p id="detailDescription">This is where the detailed description of the software and your proficiency
+                    will go. It explains your deep expertise in using the tool for various professional projects.</p>
+            </div>
+        </div>
+    </div>
+
+        <section id="services" class="section">
+                <h2>SERVICES</h2>
+                <div class="card-container"
+            style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; max-width: 900px; text-align: left;">
+                        <div class="service-item" style="border-bottom: 1px solid #333; padding-bottom: 20px;">
+                                <h3 style="color: var(--neon-pink); font-size: 2em; margin: 0;">01</h3>
+                                <h4 style="font-size: 1.5em; margin: 5px 0 10px 0;">Branding & Identity</h4>
+                                <p>Unique brand strategies and visual identities that resonate with your target
+                    audience.</p>
+                            </div>
+                        <div class="service-item" style="border-bottom: 1px solid #333; padding-bottom: 20px;">
+                                <h3 style="color: var(--neon-pink); font-size: 2em; margin: 0;">02</h3>
+                                <h4 style="font-size: 1.5em; margin: 5px 0 10px 0;">3D Modeling & Animation</h4>
+                                <p>High-quality 3D assets for product visualization, marketing, and dynamic character
+                    designs.</p>
+                            </div>
+                        <div class="service-item" style="border-bottom: 1px solid #333; padding-bottom: 20px;">
+                                <h3 style="color: var(--neon-pink); font-size: 2em; margin: 0;">03</h3>
+                                <h4 style="font-size: 1.5em; margin: 5px 0 10px 0;">Product Design & Ads</h4>
+                            </div>
+                        <div class="service-item" style="border-bottom: 1px solid #333; padding-bottom: 20px;">
+                                <h3 style="color: var(--neon-pink); font-size: 2em; margin: 0;">04</h3>
+                                <h4 style="font-size: 1.5em; margin: 5px 0 10px 0;">Custom Graphic Design</h4>
+                                <p>Creating custom graphics for websites, print media, and merchandise (e.g., T-shirt
+                    designs).</p>
+                            </div>
+                    </div>
+            </section>
+
+        <section id="portfolio" class="section" style="justify-content: flex-start; padding-top: 80px;">
+                <h2>PROJECTS</h2>
+               
+                <div class="project-row">
+                        <div class="details">
+                                <span class="index">01</span>
+                                <div>
+                                        <p class="client-name">CLIENT: Philips (3000 Series)</p>
+                                        <p>Project: Social Media Product Advertisement</p>
+                                    </div>
+                            </div>
+                        <div class="project-images">
+                                <img src="PHLIPS.jpg" alt="Philips Ad" />
+                            </div>
+                        <a href="#" class="live-link magnetic-btn">LIVE PROJECT</a>
+                    </div>
+               
+                <div class="project-row">
+                        <div class="details">
+                                <span class="index">02</span>
+                                <div>
+                                        <p class="client-name">CLIENT: Lenskart (Nazron Ko Qaid)</p>
+                                        <p>Project: High-Impact Creative Ad Design</p>
+                                    </div>
+                            </div>
+                        <div class="project-images">
+                                <img src="GLASEE.jpg" alt="Lenskart Ad" />
+                            </div>
+                        <a href="#" class="live-link magnetic-btn">LIVE PROJECT</a>
+                    </div>
+               
+                <div class="project-row">
+                        <div class="details">
+                                <span class="index">03</span>
+                                <div>
+                                        <p class="client-name">CLIENT: Fabrilife (T-Shirt Premium)</p>
+                                        <p>Project: Merchandise Promotion Creative</p>
+                                    </div>
+                            </div>
+                        <div class="project-images">
+                                <img src="farilife.jpg" alt="Fabrilife Ad" />
+                            </div>
+                        <a href="#" class="live-link magnetic-btn">LIVE PROJECT</a>
+                    </div>
+               
+                <div class="project-row">
+                        <div class="details">
+                                <span class="index">04</span>
+                                <div>
+                                        <p class="client-name">CLIENT: Haldiram's (NAM)</p>
+                                        <p>Project: Social Media Engagement Game</p>
+                                    </div>
+                            </div>
+                        <div class="project-images">
+                                <img src="NAM.jpg" alt="Haldiram's Ad" />
+                            </div>
+                        <a href="#" class="live-link magnetic-btn">LIVE PROJECT</a>
+                    </div>
+               
+                <div class="project-row">
+                        <div class="details">
+                                <span class="index">05</span>
+                                <div>
+                                        <p class="client-name">CLIENT: Bansusu (Happy Bags)</p>
+                                        <p>Project: Kids Product Launch Campaign</p>
+                                    </div>
+                            </div>
+                        <div class="project-images">
+                                <img src="bag post.jpg" alt="Bansusu Ad" />
+                            </div>
+                        <a href="#" class="live-link magnetic-btn">LIVE PROJECT</a>
+                    </div>
+            </section>
+
+        <section id="testimonials" class="section">
+                <h2>WHAT CLIENTS ARE SAYING</h2>
+                <div class="card-container">
+                        <div class="card">
+                                <p>"Sushil delivered a 3D model that exceeded our expectations. The attention to detail
+                    was flawless!"</p>
+                                <p style="color: var(--neon-pink); margin-top: 10px;">— Alex T., Creative Director</p>
+                            </div>
+                        <div class="card">
+                                <p>"The social media creatives for our product launch were incredible and highly
+                    engaging. Highly recommend."</p>
+                                <p style="color: var(--neon-pink); margin-top: 10px;">— Dr. A. Khan, Marketing Head</p>
+                            </div>
+                        <div class="card">
+                                <p>"The game we created was an instant hit! Sushil perfectly captured the vision and
+                    brought it to life."</p>
+                                <p style="color: var(--neon-pink); margin-top: 10px;">— Priya S., Brand Manager</p>
+                            </div>
+                    </div>
+            </section>
+
+        <section id="contact" class="section">
+                <h2 style="margin-bottom: 20px;">LET'S GET IN TOUCH</h2>
+                <div class="contact-info">
+                        <p>EMAIL: <span style="color: var(--neon-pink);">sushilnayak5@gmail.com</span></p>
+                        <p>PHONE: +91 XXXXX XXXXX</p>
+                    </div>
+                <form style="display: flex; gap: 20px; flex-wrap: wrap; max-width: 600px;">
+                        <input type="text" placeholder="Full Name" required style="flex: 1 1 48%;">
+                        <input type="email" placeholder="Email Address" required style="flex: 1 1 48%;">
+                        <textarea placeholder="Your Message" rows="4"
+                style="flex: 1 1 100%; padding: 15px; border: 2px solid #555; border-radius: 8px; background: #1e1e1e; color: var(--white); font-family: var(--font-secondary); font-size: 1em; outline: none;"></textarea>
+                        <button type="submit" class="magnetic-btn"
+                style="flex: 1 1 100%; margin-top: 0; padding: 15px;">SEND MESSAGE</button>
+                    </form>
+            </section>
+
+        <footer>
+                <p>SHUSHIL NAYAK</p>
+                <div class="footer-nav">
+                        <a href="#">SOCIAL</a>
+                        <a href="#">CONTACT</a>
+                        <a href="#">RESUME</a>
+                    </div>
+            </footer>
+</body>
+
+</html>

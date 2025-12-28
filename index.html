@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ALEX - 3D/Graphic Designer Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* ------------------------------------------- */
+        /* GLOBAL RESET & SCROLL SNAPPING (Page Transition Effect) */
+        /* ------------------------------------------- */
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+            --neon-pink: #ff4d4d;
+            --text-color: var(--white);
+            --bg-color: var(--black);
+            --font-main: 'Montserrat', sans-serif;
+            --font-secondary: 'Poppins', sans-serif;
+        }
+
+        /* Enforce smooth vertical section-to-section scroll similar to the video */
+        body {
+            font-family: var(--font-secondary);
+            margin: 0;
+            background: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            
+            /* SCROLL SNAP EFFECT */
+            scroll-snap-type: y mandatory;
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-behavior: smooth; /* For smooth transition on click */
+        }
+        
+        /* Apply transition to all sections and links */
+        * {
+            box-sizing: border-box;
+            transition: color 0.3s, background-color 0.3s, opacity 0.8s;
+        }
+
+        /* ------------------------------------------- */
+        /* HEADER & NAVIGATION */
+        /* ------------------------------------------- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 40px;
+            z-index: 100;
+        }
+
+        header h2 {
+            font-family: var(--font-main);
+            font-weight: 900;
+            font-size: 1.5em;
+            color: var(--white);
+        }
+
+        nav a {
+            margin-left: 30px;
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            letter-spacing: 1px;
+            position: relative;
+        }
+
+        /* Underline/Neon hover effect */
+        nav a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 0;
+            height: 2px;
+            background: var(--neon-pink);
+            box-shadow: 0 0 5px var(--neon-pink);
+            transition: width 0.3s ease-out;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* ------------------------------------------- */
+        /* SECTION BASE STYLES & SCROLL SNAP TARGET */
+        /* ------------------------------------------- */
+        .section {
+            height: 100vh;
+            width: 100%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            scroll-snap-align: start; /* Main scroll snapping point */
+            position: relative;
+        }
+
+        /* ------------------------------------------- */
+        /* HERO SECTION (0:00 - HI, I'M ALEX) */
+        /* ------------------------------------------- */
+        .hero {
+            flex-direction: column;
+            text-align: center;
+            justify-content: center;
+            padding-top: 100px;
+        }
+
+        .hero h1 {
+            font-family: var(--font-main);
+            font-size: 8vw; /* Large, responsive text */
+            margin: 0;
+            line-height: 0.9;
+            font-weight: 900;
+            /* Mimic the outlined/neon look from the video */
+            text-shadow: 
+                -1px -1px 0 var(--neon-pink), 
+                1px -1px 0 var(--neon-pink), 
+                -1px 1px 0 var(--neon-pink), 
+                1px 1px 0 var(--neon-pink),
+                0 0 10px var(--neon-pink); /* Neon glow */
+        }
+        
+        .hero h1 span {
+            color: var(--neon-pink); /* Highlight "ALEX" */
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            letter-spacing: 3px;
+            margin-top: 15px;
+            opacity: 0.7;
+        }
+
+        .hero img {
+            width: 300px; /* The 3D head */
+            border-radius: 50%;
+            margin: 30px 0;
+            box-shadow: 0 0 40px rgba(255, 77, 77, 0.4);
+            transition: transform 0.3s;
+        }
+        
+        /* Optional: 3D-like hover on the image */
+        .hero img:hover {
+            transform: scale(1.05) rotateX(2deg);
+        }
+
+        .contact-btn {
+            padding: 15px 40px;
+            background-color: var(--neon-pink);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1em;
+            letter-spacing: 1px;
+            box-shadow: 0 0 15px rgba(255, 77, 77, 0.6);
+            transition: all 0.3s;
+        }
+        
+        .contact-btn:hover {
+            background-color: #ff6e6e;
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 77, 77, 0.8);
+        }
+
+        /* ------------------------------------------- */
+        /* ABOUT ME & SERVICES (0:08 - ABOUT ME, 0:11 - SERVICES) */
+        /* ------------------------------------------- */
+        .section h2 {
+            font-family: var(--font-main);
+            font-size: 6vw;
+            margin-bottom: 50px;
+            letter-spacing: 5px;
+            /* Outline effect from the video */
+            -webkit-text-stroke: 1px var(--white);
+            color: transparent; /* Text stroke without fill */
+            text-align: center;
+        }
+
+        .card-container {
+            display: flex;
+            gap: 25px;
+            max-width: 1200px;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .card {
+            background: #111111;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            width: 300px;
+            text-align: left;
+            border: 1px solid #333;
+        }
+        
+        .card h3 {
+            color: var(--neon-pink);
+            font-size: 1.5em;
+            font-weight: 700;
+        }
+        
+        /* ------------------------------------------- */
+        /* PROJECT SECTION (0:14 - PROJECTS) */
+        /* ------------------------------------------- */
+        #portfolio {
+            /* To allow project rows to stack vertically */
+            flex-direction: column; 
+        }
+
+        .project-row {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #090909;
+            margin: 10px 0;
+            padding: 20px 30px;
+            border-radius: 15px;
+            border: 1px solid #333;
+            transition: all 0.4s ease-in-out;
+        }
+        
+        .project-row:hover {
+            background: #1a1a1a;
+            transform: translateX(10px);
+            box-shadow: 0 0 25px rgba(255, 77, 77, 0.2);
+        }
+
+        .project-row .details {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .project-row .index {
+            font-size: 3em;
+            font-family: var(--font-main);
+            font-weight: 900;
+            color: var(--neon-pink);
+        }
+        
+        .project-row .client-name {
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .project-row .live-link {
+            text-decoration: none;
+            color: var(--white);
+            border: 1px solid var(--white);
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-size: 0.9em;
+        }
+
+        /* ------------------------------------------- */
+        /* CONTACT FORM (0:21 - LET'S GET IN TOUCH) */
+        /* ------------------------------------------- */
+        #contact {
+            background: #0f0f0f; 
+        }
+
+        #contact form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 500px;
+            margin-top: 30px;
+        }
+
+        #contact input[type="text"], 
+        #contact input[type="email"], 
+        #contact textarea {
+            padding: 15px;
+            border: 2px solid #555;
+            border-radius: 8px;
+            background: #1e1e1e;
+            color: var(--white);
+            font-family: var(--font-secondary);
+            font-size: 1em;
+            outline: none;
+        }
+        
+        #contact input:focus, #contact textarea:focus {
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 8px rgba(255, 77, 77, 0.5);
+        }
+
+        #contact button {
+            background: var(--neon-pink);
+            color: var(--white);
+            border: none;
+            padding: 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        #contact button:hover {
+            background: #ff6e6e;
+        }
+        
+        /* ------------------------------------------- */
+        /* FOOTER */
+        /* ------------------------------------------- */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: var(--black);
+            box-shadow: none;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            font-size: 0.9em;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>ALEX.</h2>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#portfolio">Projects</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <section id="home" class="hero section">
+        <p>I'M A 3D DESIGNER</p>
+        <h1>HI, I'M <span>ALEX</span></h1>
+        <p>A 3D Designer passionate about crafting bold and memorable projects.</p>
+        <img src="profile_3d_render.png" alt="3D Profile" /> 
+        <a href="#contact" class="contact-btn">CONTACT ME</a>
+    </section>
+
+    <section id="about" class="section">
+        <h2>ABOUT ME</h2>
+        <div class="card" style="max-width: 800px; text-align: center;">
+            <p>I specialize in **branding**, **web design**, and **user experience**. I love collaborating with businesses that want to stand out and showcase their best side. Let's create something amazing together!</p>
+            <br>
+            <p>With over five years of experience in design, I use my expertise in 3D modeling, texturing, lighting, and rendering to create compelling visual narratives for marketing and product visualization.</p>
+        </div>
+    </section>
+
+    <section id="services" class="section">
+        <h2>SERVICES</h2>
+        <div class="card-container">
+            <div class="card">
+                <h3>01. Branding & Identity</h3>
+                <p>Developing unique brand strategies and visual identities that resonate with your target audience.</p>
+            </div>
+            <div class="card">
+                <h3>02. 3D Modeling & Rendering</h3>
+                <p>Creating high-quality 3D assets for product visualization, marketing, and architectural pre-visualization.</p>
+            </div>
+            <div class="card">
+                <h3>03. Web Design (UI/UX)</h3>
+                <p>Designing modern, responsive, and user-centric websites that deliver excellent user experiences.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="section">
+        <h2>PROJECTS</h2>
+        <div class="project-row">
+            <div class="details">
+                <span class="index">01</span>
+                <div>
+                    <p class="client-name">CLIENT: Skyline Studios</p>
+                    <p>Project: Fantasy Environment Concept</p>
+                </div>
+            </div>
+            <a href="#" class="live-link">LIVE PROJECT</a>
+        </div>
+        <div class="project-row">
+            <div class="details">
+                <span class="index">02</span>
+                <div>
+                    <p class="client-name">CLIENT: MetaVerse Creations</p>
+                    <p>Project: Product Visualization Package</p>
+                </div>
+            </div>
+            <a href="#" class="live-link">LIVE PROJECT</a>
+        </div>
+        <div class="project-row">
+            <div class="details">
+                <span class="index">03</span>
+                <div>
+                    <p class="client-name">CLIENT: Apex Corporation</p>
+                    <p>Project: Dynamic Logo Animation</p>
+                </div>
+            </div>
+            <a href="#" class="live-link">LIVE PROJECT</a>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <h2>LET'S GET IN TOUCH</h2>
+        <form>
+            <input type="text" placeholder="Full Name" required>
+            <input type="email" placeholder="Email Address" required>
+            <input type="text" placeholder="Subject" required>
+            <textarea placeholder="Your Message" rows="4"></textarea>
+            <button type="submit">SEND MESSAGE</button>
+        </form>
+        <footer>© 2025 Alex Turner — 3D & Graphic Designer</footer>
+    </section>
+
+</body>
+</html>

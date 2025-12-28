@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Graphic Designer Portfolio - Advanced</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ------------------------------------------- */
+    /* GLOBAL STYLES & TRANSITIONS */
+    /* ------------------------------------------- */
+    :root {
+      /* Global transition for smooth color/background changes */
+      --transition-duration: 0.8s; 
+      --primary-color: #ff4d4d;
+      --light-bg: #f7f7f7;
+      --light-card-bg: #fff;
+      --dark-bg: #121212;
+      --dark-card-bg: #1e1e1e;
+      --text-color-light: #222;
+      --text-color-dark: #eee;
+      --neon-glow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color);
+    }
+    
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      background: var(--light-bg);
+      color: var(--text-color-light);
+      /* Apply transition to all relevant properties for smooth fade */
+      transition: background var(--transition-duration), color var(--transition-duration);
+    }
+
+    /* ------------------------------------------- */
+    /* DARK MODE STYLES & NEON HIGHLIGHTS */
+    /* ------------------------------------------- */
+    body.dark {
+      background: var(--dark-bg);
+      color: var(--text-color-dark);
+    }
+
+    /* Header/Footer background in Dark Mode */
+    body.dark header, body.dark footer {
+      background: var(--dark-card-bg);
+      box-shadow: 0 4px 15px rgba(255, 77, 77, 0.15); /* Light red shadow */
+    }
+
+    /* Navigation/Links in Dark Mode (Neon Glow) */
+    body.dark nav a {
+      color: var(--text-color-dark);
+    }
+    body.dark nav a:hover {
+      color: var(--primary-color);
+      text-shadow: var(--neon-glow);
+    }
+    
+    /* Card in Dark Mode (Dark BG, Neon Shadow) */
+    body.dark .card {
+      background: var(--dark-card-bg);
+      box-shadow: 0 0 10px rgba(255, 77, 77, 0.2);
+    }
+    body.dark .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 20px rgba(255, 77, 77, 0.4);
+    }
+    
+    /* Hero Section Gradient in Dark Mode */
+    body.dark .hero {
+      background: linear-gradient(to right, #1a1212, #121212);
+    }
+    
+    /* ------------------------------------------- */
+    /* LAYOUT & COMPONENTS */
+    /* ------------------------------------------- */
+    header {
+      position: sticky;
+      top: 0;
+      background: var(--light-card-bg);
+      display: flex;
+      justify-content: space-between;
+      padding: 18px 40px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      z-index: 50;
+      transition: background var(--transition-duration), box-shadow var(--transition-duration);
+    }
+    nav a {
+      margin-left: 30px;
+      text-decoration: none;
+      color: var(--text-color-light);
+      font-weight: 600;
+      transition: 0.3s ease-in-out; /* Only for hover, not mode switch */
+    }
+    nav a:hover {
+      color: var(--primary-color);
+    }
+
+    .hero {
+      padding: 90px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to right, #ffecec, #ffffff);
+      /* Initial state for fade-in animation */
+      opacity: 0; 
+      animation: fadeIn 1s ease-out forwards;
+      animation-delay: 0.5s;
+    }
+    .hero img{
+      width: 350px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      transition: .3s;
+    }
+    .hero img:hover{
+      transform: scale(1.03);
+    }
+    .hero h1{
+      font-size: 42px;
+      line-height: 1.2;
+    }
+
+    .section {
+      padding: 60px 40px;
+    }
+
+    .card{
+      background: var(--light-card-bg);
+      padding: 30px;
+      border-radius: 18px;
+      margin-bottom: 25px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+      transition: 0.3s ease-in-out, background var(--transition-duration), box-shadow var(--transition-duration);
+    }
+    .card:hover{
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    
+    /* ------------------------------------------- */
+    /* CONTACT BUTTON - MAGNETIC/3D SIMULATION */
+    /* ------------------------------------------- */
+    .contact-btn {
+      display: inline-block;
+      padding: 12px 25px;
+      background-color: var(--primary-color);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      margin-top: 15px;
+      transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Simple 3D press effect on hover */
+    .contact-btn:hover {
+        transform: translate(0, -3px);
+        box-shadow: 0 8px 15px rgba(255, 77, 77, 0.5);
+    }
+    
+    /* ------------------------------------------- */
+    /* FOOTER & DARK MODE TOGGLE */
+    /* ------------------------------------------- */
+    footer{
+      text-align:center;
+      padding: 20px;
+      background:var(--light-card-bg);
+      margin-top:40px;
+      box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
+      transition: background var(--transition-duration), box-shadow var(--transition-duration), color var(--transition-duration);
+    }
+    
+    .dark-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 100;
+        background: #222;
+        color: white;
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        font-size: 24px;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        transition: background var(--transition-duration), transform 0.3s;
+    }
+    .dark-btn:hover {
+      transform: scale(1.1);
+    }
+    body.dark .dark-btn {
+      background: var(--primary-color);
+      box-shadow: 0 0 10px var(--primary-color);
+    }
+
+    /* ------------------------------------------- */
+    /* SCROLL ANIMATION (CSS only fade) */
+    /* ------------------------------------------- */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .animate-on-scroll {
+        opacity: 0;
+        /* Default position for hidden elements */
+        transform: translateY(20px); 
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .animate-on-scroll.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- 1. DARK MODE TOGGLE & SMOOTH TRANSITION ---
+        const toggle = document.getElementById('darkToggle');
+        const body = document.body;
+
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            body.classList.add('dark');
+        } else if (!savedTheme) {
+            // Optional: Check system preference if no local storage saved
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                body.classList.add('dark');
+            }
+        }
+
+        toggle?.addEventListener('click', () => {
+            body.classList.toggle('dark');
+            // Save preference
+            if (body.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // --- 2. SIMPLE SCROLL ANIMATION (CSS only fade) ---
+        const sectionsToAnimate = document.querySelectorAll('.section, .card, .hero img');
+
+        // Apply base class for elements that will be animated
+        sectionsToAnimate.forEach(el => {
+            if (!el.classList.contains('hero')) { // Hero already has initial animation
+                el.classList.add('animate-on-scroll');
+            }
+        });
+        
+        const observerOptions = {
+            root: null, // relative to the viewport
+            rootMargin: '0px 0px -100px 0px', // Trigger 100px before the bottom of the viewport
+            threshold: 0 // As soon as any part of the target enters the root
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // Optional: Stop observing after it has animated once
+                    // observer.unobserve(entry.target); 
+                } 
+                // else {
+                //     entry.target.classList.remove('visible'); // Uncomment for repeat animation on scroll out
+                // }
+            });
+        }, observerOptions);
+
+        sectionsToAnimate.forEach(el => observer.observe(el));
+        
+        // --- 3. MAGNETIC EFFECT (Simplified) ---
+        // This requires complex mouse position tracking (GSAP/JS) which is too heavy for this simple example.
+        // We've opted for a CSS-only 3D hover on the contact button instead.
+    });
+  </script>
+</head>
+<body>
+  <header>
+    <h2>My Portfolio</h2>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section id="home" class="hero">
+    <div>
+      <h1>Hello, I'm a Graphic Designer<br />Crafting Visual Impact</h1>
+      <p>Branding • Logo • Social Media • Packaging • Magazine Designs</p>
+    </div>
+    <img src="profile.jpg" alt="Profile" />
+  </section>
+
+  <section id="about" class="section">
+    <h2>About Me</h2>
+    <div class="card">
+      <p>I’m a passionate Graphic Designer with a strong interest in creating visuals that are clean, meaningful, and creatively impactful. As a fresher, I focus on learning, experimenting, and delivering designs that connect with the audience.</p>
+      <p>I enjoy working across branding, logo design, packaging, magazine layouts, and social media graphics, bringing ideas to life through thoughtful design decisions. My goal is simple—to create designs that not only look good but communicate clearly.</p>
+      <p>With hands-on experience in Photoshop, Illustrator, InDesign, CorelDRAW, Premiere Pro, and Canva, I explore various styles to create engaging visual work. I aim to collaborate with brands, startups, and creators to build meaningful design experiences.</p>
+    </div>
+  </section>
+
+  <section id="services" class="section">
+    <h2>Services</h2>
+    <div class="card"><h3>Branding & Logo Design</h3><p>Unique and memorable brand identity.</p></div>
+    <div class="card"><h3>Social Media Graphics</h3><p>Modern & attractive creatives for your brand.</p></div>
+    <div class="card"><h3>Packaging Design</h3><p>Clean product packaging that stands out.</p></div>
+    <div class="card"><h3>Video Editing</h3><p>Short edits, reels, ads, and more.</p></div>
+  </section>
+
+  <section id="portfolio" class="section">
+    <h2>Portfolio</h2>
+    <div class="card"><p>Coming soon — Add your best works here with images.</p></div>
+  </section>
+
+  <section id="contact" class="section">
+    <h2>Contact</h2>
+    <div class="card">
+      <p>Email: yourmail@gmail.com</p>
+      <p>Phone: +91 XXXXX XXXXX</p>
+      <p>Instagram: @yourprofile</p>
+      <a href="mailto:yourmail@gmail.com" class="contact-btn">Get In Touch</a>
+    </div>
+  </section>
+
+  <footer>© 2025 Your Name — Graphic Designer</footer>
+  <button id="darkToggle" class="dark-btn">🌙</button>
+</body>
+</html>
