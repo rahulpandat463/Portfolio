@@ -1040,23 +1040,21 @@ gsap.from(".form-group", {
 });
 
 // Services Section Animation
-gsap.utils.toArray(".service-item").forEach((item, i) => {
-    gsap.from(item, {
-        scrollTrigger: {
-            trigger: item,
-            start: "top 85%",
-            toggleActions: "play none none none",
-        },
-        opacity: 0,
-        y: 50,
-        scale: 0.9,
-        duration: 0.8,
-        delay: i * 0.1,
-        ease: "power3.out",
-        onComplete: () => {
-            item.classList.add('animate');
-        }
-    });
+gsap.from(".service-item", {
+    scrollTrigger: {
+        trigger: "#services",
+        start: "top 80%",
+        toggleActions: "play none none none",
+    },
+    opacity: 0,
+    y: 50,
+    scale: 0.9,
+    duration: 0.8,
+    stagger: 0.1,
+    ease: "power3.out",
+    onComplete: () => {
+        gsap.utils.toArray(".service-item").forEach(item => item.classList.add('animate'));
+    }
 });
     </script>
 </head>
