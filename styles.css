@@ -126,7 +126,8 @@ nav a:hover {
 
 .name-row {
     display: inline-flex;
-    align-self: flex-start; /* Prevents container from stretching, hugging the name text exactly */
+    align-self: flex-start;
+    /* Prevents container from stretching, hugging the name text exactly */
     align-items: center;
     position: relative;
     margin-bottom: 30px;
@@ -145,23 +146,30 @@ nav a:hover {
     font-size: 2.2rem;
     color: #555;
     position: absolute;
-    left: calc(100% + 35px); /* Spaced perfectly next to your name */
-    top: -16px; /* Shifted slightly lower for perfect vertical alignment */
+    left: calc(100% + 35px);
+    /* Spaced perfectly next to your name */
+    top: -16px;
+    /* Shifted slightly lower for perfect vertical alignment */
     white-space: nowrap;
     transform-origin: left center;
-    transform: rotate(-10deg); /* Beautiful handwritten slant */
+    transform: rotate(-10deg);
+    /* Beautiful handwritten slant */
 }
 
 .about-me-arrow {
     position: absolute;
-    width: 60px; /* Perfect scale for the local arrow asset */
+    width: 60px;
+    /* Perfect scale for the local arrow asset */
     height: auto;
     top: 35px;
-    left: 15px; /* Adjusted left slightly to perfectly align the mirrored loop */
+    left: 15px;
+    /* Adjusted left slightly to perfectly align the mirrored loop */
     pointer-events: none;
     opacity: 0.9;
-    mix-blend-mode: multiply; /* Safely blends out any white background canvas pixels */
-    transform: scaleX(-1); /* Flips the arrow horizontally to point down-left towards your greeting! */
+    mix-blend-mode: multiply;
+    /* Safely blends out any white background canvas pixels */
+    transform: scaleX(-1);
+    /* Flips the arrow horizontally to point down-left towards your greeting! */
 }
 
 .greeting {
@@ -777,7 +785,8 @@ nav a:hover {
     pointer-events: all;
     z-index: 700;
     line-height: 0;
-    padding-bottom: 4px; /* Perfectly centers crosshair font glyph */
+    padding-bottom: 4px;
+    /* Perfectly centers crosshair font glyph */
 }
 
 #skillZoomClose:hover {
@@ -877,7 +886,6 @@ nav a:hover {
 .hero-image-wrapper {
     width: 44%;
     max-width: 600px;
-    max-height: 45vh; /* Bounds container height to prevent overlapping layout shifts */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -887,7 +895,7 @@ nav a:hover {
 
 .hero-character-img {
     width: 100%;
-    max-height: 45vh; /* Bounds character height to prevent text overlaps */
+    height: auto;
     object-fit: contain;
     filter: drop-shadow(0 0 60px rgba(255, 77, 77, 0.35));
     cursor: pointer;
@@ -900,15 +908,19 @@ nav a:hover {
     0% {
         transform: translateY(0px) rotate(0deg);
     }
+
     25% {
         transform: translateY(-10px) rotate(0.5deg);
     }
+
     50% {
         transform: translateY(0px) rotate(-0.5deg);
     }
+
     75% {
         transform: translateY(10px) rotate(0.5deg);
     }
+
     100% {
         transform: translateY(0px) rotate(0deg);
     }
@@ -1039,7 +1051,8 @@ nav a:hover {
     text-align: right;
     position: relative;
     z-index: 10;
-    margin-right: -130px; /* Mathematically verified offset to completely eliminate transparent padding on the PNG and touch the text start */
+    margin-right: -130px;
+    /* Mathematically verified offset to completely eliminate transparent padding on the PNG and touch the text start */
 }
 
 .services-image::before {
@@ -1066,7 +1079,8 @@ nav a:hover {
     filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.5));
     transition: transform 0.5s ease;
     display: block;
-    margin-left: auto; /* Aligns the block image perfectly to the right side of the flex item */
+    margin-left: auto;
+    /* Aligns the block image perfectly to the right side of the flex item */
 }
 
 .services-image img:hover {
@@ -1078,7 +1092,8 @@ nav a:hover {
     display: flex;
     flex-direction: column;
     gap: 0;
-    padding-left: 15px; /* Tiny, tight padding so the text starts right next to his hand */
+    padding-left: 15px;
+    /* Tiny, tight padding so the text starts right next to his hand */
     position: relative;
 }
 
@@ -1115,7 +1130,7 @@ nav a:hover {
 .service-num {
     font-size: 1.1rem;
     font-weight: 700;
-    color: rgba(255,255,255,0.3);
+    color: rgba(255, 255, 255, 0.3);
     font-family: var(--font-main);
     min-width: 36px;
     padding-top: 4px;
@@ -1145,12 +1160,15 @@ nav a:hover {
 
     .services-image {
         flex: none;
-        margin-right: 0; /* Reset negative margin on mobile to prevent clipping/overflow */
-        text-align: center; /* Center the character */
+        margin-right: 0;
+        /* Reset negative margin on mobile to prevent clipping/overflow */
+        text-align: center;
+        /* Center the character */
     }
 
     .services-image img {
-        margin: 0 auto; /* Center block image perfectly on mobile */
+        margin: 0 auto;
+        /* Center block image perfectly on mobile */
     }
 
     .services-list {
@@ -1218,15 +1236,6 @@ footer {
 
     .hero h1 {
         font-size: 12vw;
-    }
-
-    .hero-image-wrapper {
-        width: 75%; /* Generous scale on mobile screens */
-        max-height: 40vh; /* Prevents overflow pushing components off mobile screens */
-    }
-
-    .hero-character-img {
-        max-height: 40vh;
     }
 
     .section h2 {
