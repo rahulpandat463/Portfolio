@@ -877,6 +877,7 @@ nav a:hover {
 .hero-image-wrapper {
     width: 44%;
     max-width: 600px;
+    max-height: 45vh; /* Bounds container height to prevent overlapping layout shifts */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -886,7 +887,7 @@ nav a:hover {
 
 .hero-character-img {
     width: 100%;
-    height: auto;
+    max-height: 45vh; /* Bounds character height to prevent text overlaps */
     object-fit: contain;
     filter: drop-shadow(0 0 60px rgba(255, 77, 77, 0.35));
     cursor: pointer;
@@ -1217,6 +1218,15 @@ footer {
 
     .hero h1 {
         font-size: 12vw;
+    }
+
+    .hero-image-wrapper {
+        width: 75%; /* Generous scale on mobile screens */
+        max-height: 40vh; /* Prevents overflow pushing components off mobile screens */
+    }
+
+    .hero-character-img {
+        max-height: 40vh;
     }
 
     .section h2 {
