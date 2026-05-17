@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sushil Nayak - 3D/Graphic Designer Portfolio</title>
+    <title>Sushil Nayak - Graphic Designer/ Video Editor Portfolio</title>
 
 
 
@@ -143,6 +143,10 @@
             skillBackdrop.id = 'skillBackdrop';
             document.body.appendChild(skillBackdrop);
 
+            const categoryEl = document.getElementById('skillZoomCategory');
+            const titleEl = document.getElementById('skillZoomTitle');
+            const descEl = document.getElementById('skillZoomDesc');
+
             function expandCard(card) {
                 // If hovering same card that's already open, do nothing
                 if (isExpanded && activeCard === card) return;
@@ -150,14 +154,29 @@
                 const img = card.querySelector('img.background-image');
                 const rect = img.getBoundingClientRect();
 
+                // Inject dynamic content from card into detail panel
+                if (categoryEl && titleEl && descEl) {
+                    categoryEl.textContent = card.querySelector('.skill-card-content p:first-child').textContent;
+                    titleEl.textContent = card.querySelector('.skill-card-content h3').textContent;
+                    descEl.textContent = card.querySelector('.skill-card-content p:last-child').textContent;
+                }
+
                 // If switching to a different card while panel is open
                 if (isExpanded && activeCard !== card) {
                     activeCard = card;
                     zoomImg.src = img.src;
+                    
+                    // Reset details panel state
+                    gsap.set('.zoom-right', { opacity: 0, x: 30 });
+                    
+                    // Animate new elements
                     gsap.fromTo(zoomImg,
                         { scale: 0.85, opacity: 0 },
                         { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out' }
                     );
+                    gsap.to('.zoom-right', {
+                        opacity: 1, x: 0, duration: 0.55, ease: 'power3.out'
+                    });
                     return;
                 }
 
@@ -170,20 +189,32 @@
                 zoomPanel.style.display = 'flex';
                 gsap.set(zoomPanel, { opacity: 1 });
 
-                // Calculate offset from card center to viewport center
+                // Hidden state before sliding in details
+                gsap.set('.zoom-right', { opacity: 0, x: 30 });
+
+                // Calculate offset from card center to left column (.zoom-left) center
+                const leftCol = document.querySelector('.zoom-left');
+                const leftRect = leftCol.getBoundingClientRect();
+                const leftCX = leftRect.left + leftRect.width / 2;
+                const leftCY = leftRect.top + leftRect.height / 2;
+
                 const cardCX = rect.left + rect.width / 2;
                 const cardCY = rect.top + rect.height / 2;
-                const vpCX = window.innerWidth / 2;
-                const vpCY = window.innerHeight / 2;
-                const startX = cardCX - vpCX;
-                const startY = cardCY - vpCY;
-                const panelImgW = window.innerWidth * 0.45;
-                const startScale = Math.min(rect.width / panelImgW, 0.7);
+                
+                const startX = cardCX - leftCX;
+                const startY = cardCY - leftCY;
+                const startScale = Math.min(rect.width / leftRect.width, 0.7);
 
-                // Animate FROM card position TO viewport center
+                // Animate FROM card grid position TO left-column center
                 gsap.fromTo(zoomImg,
                     { x: startX, y: startY, scale: startScale, opacity: 0.9 },
-                    { x: 0, y: 0, scale: 1, opacity: 1, duration: 0.55, ease: 'power3.out' }
+                    { x: 0, y: 0, scale: 1, opacity: 1, duration: 0.6, ease: 'power3.out' }
+                );
+
+                // Slide details in from the right
+                gsap.fromTo('.zoom-right',
+                    { opacity: 0, x: 40 },
+                    { opacity: 1, x: 0, duration: 0.65, ease: 'power3.out', delay: 0.15 }
                 );
 
                 // Dim other cards
@@ -201,9 +232,14 @@
                 isExpanded = false;
                 activeCard = null;
 
-                // Fade out zoom panel
+                // Fade out details panel on right
+                gsap.to('.zoom-right', {
+                    opacity: 0, x: 30, duration: 0.35, ease: 'power2.in'
+                });
+
+                // Fade out zoom image on left
                 gsap.to(zoomImg, {
-                    scale: 0.85, opacity: 0, duration: 0.3, ease: 'power2.in',
+                    scale: 0.85, opacity: 0, duration: 0.35, ease: 'power2.in',
                     onComplete: () => { zoomPanel.style.display = 'none'; }
                 });
 
@@ -216,16 +252,38 @@
             }
 
             skillCards.forEach(card => {
+                // Open card on click (extremely important for mobile touch support!)
+                card.addEventListener('click', (e) => {
+                    expandCard(card);
+                });
+
+                // Open card on hover for desktop users
                 const charImg = card.querySelector('img.background-image');
                 if (charImg) {
-                    charImg.addEventListener('mouseenter', () => expandCard(card));
+                    charImg.addEventListener('mouseenter', (e) => {
+                        e.stopPropagation();
+                        expandCard(card);
+                    });
                 }
             });
 
-            // Close only when user clicks outside (the backdrop or empty panel area)
+            // Close when user clicks backdrop
             skillBackdrop.addEventListener('click', collapseCard);
+
+            // Close when user clicks Close (X) button
+            const closeBtn = document.getElementById('skillZoomClose');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    collapseCard();
+                });
+            }
+
+            // Close when user clicks empty space outside character or details panel
             zoomPanel.addEventListener('click', (e) => {
-                if (e.target !== zoomImg) collapseCard();
+                if (!e.target.closest('#skillZoomImg') && !e.target.closest('.zoom-right')) {
+                    collapseCard();
+                }
             });
 
             // Typing Animation for Hero H1
@@ -401,6 +459,9 @@
                     y: -12,
                     rotation: 2,
                     duration: 3,
+                    yoyo: true,
+                    repeat: -1,
+                    ease: "sine.inOut"
                 });
             }
         });
@@ -504,9 +565,10 @@
     </header>
 
     <section id="home" class="hero section">
-        <p style="font-size: 1.2em; opacity: 0.7;">WANT TO BUILD A STUNNING PORTFOLIO SITE FOR </p>
+        <p style="font-size: 1.2em; opacity: 0.7;"></p>
         <h1 id="typing-h1">I'M SUSHIL</h1>
-        <p style="font-size: 1.2em; letter-spacing: 3px;">A 3D Designer passionate about crafting bold and
+        <p style="font-size: 1.2em; letter-spacing: 3px;">A video editor or graphic design passionate about crafting
+            bold and
             memorable projects.</p>
         <div class="hero-image-wrapper">
             <img src="3d Model.png" alt="3D Profile Render" class="hero-character-img" />
@@ -638,7 +700,17 @@
 
     <!-- Skill Zoom Panel -->
     <div id="skillZoomPanel">
-        <img id="skillZoomImg" src="" alt="">
+        <button id="skillZoomClose" aria-label="Close">&times;</button>
+        <div class="zoom-panel-content">
+            <div class="zoom-left">
+                <img id="skillZoomImg" src="" alt="">
+            </div>
+            <div class="zoom-right">
+                <p id="skillZoomCategory" class="zoom-category"></p>
+                <h2 id="skillZoomTitle" class="zoom-title"></h2>
+                <p id="skillZoomDesc" class="zoom-desc"></p>
+            </div>
+        </div>
     </div>
 
     <section id="services" class="section">

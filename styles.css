@@ -125,7 +125,8 @@ nav a:hover {
 }
 
 .name-row {
-    display: flex;
+    display: inline-flex;
+    align-self: flex-start; /* Prevents container from stretching, hugging the name text exactly */
     align-items: center;
     position: relative;
     margin-bottom: 30px;
@@ -141,25 +142,26 @@ nav a:hover {
 
 .about-me-script {
     font-family: 'Caveat', cursive;
-    font-size: 3rem;
+    font-size: 2.2rem;
     color: #555;
     position: absolute;
-    right: 50px;
-    top: -20px;
-    transform: rotate(-10deg);
+    left: calc(100% + 35px); /* Spaced perfectly next to your name */
+    top: -16px; /* Shifted slightly lower for perfect vertical alignment */
+    white-space: nowrap;
+    transform-origin: left center;
+    transform: rotate(-10deg); /* Beautiful handwritten slant */
 }
 
 .about-me-arrow {
     position: absolute;
-    width: 60px;
+    width: 60px; /* Perfect scale for the local arrow asset */
     height: auto;
-    top: 42px;
-    left: 45px;
-    transform: scaleX(-1) rotate(15deg);
-    opacity: 0.85;
-    mix-blend-mode: multiply; /* Blends the white background seamlessly into the section beige */
-    filter: contrast(500%) brightness(110%); /* High contrast key out for any grey checkboard grid pixels */
+    top: 35px;
+    left: 15px; /* Adjusted left slightly to perfectly align the mirrored loop */
     pointer-events: none;
+    opacity: 0.9;
+    mix-blend-mode: multiply; /* Safely blends out any white background canvas pixels */
+    transform: scaleX(-1); /* Flips the arrow horizontally to point down-left towards your greeting! */
 }
 
 .greeting {
@@ -665,7 +667,7 @@ nav a:hover {
     display: none !important;
 }
 
-/* Skill Zoom Panel — full viewport, image centered, animates from card position */
+/* Skill Zoom Panel — Split layout: Left (Character) and Right (Glassmorphic details card) */
 #skillZoomPanel {
     position: fixed;
     top: 0;
@@ -677,15 +679,156 @@ nav a:hover {
     align-items: center;
     z-index: 600;
     pointer-events: none;
+    padding: 60px;
 }
 
-#skillZoomPanel img {
-    width: 45vw;
-    max-width: 520px;
+.zoom-panel-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+    gap: 80px;
+    pointer-events: all;
+}
+
+.zoom-left {
+    flex: 1.2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#skillZoomImg {
+    width: 100%;
+    max-width: 500px;
     height: auto;
     object-fit: contain;
-    filter: drop-shadow(0 40px 80px rgba(0, 0, 0, 0.8));
+    filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.75));
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.zoom-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+    text-align: left;
+    color: #fff;
+    padding: 50px 40px;
+    background: rgba(18, 18, 18, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 24px;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    transform: translateX(30px);
+    will-change: transform, opacity;
+}
+
+.zoom-category {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--neon-pink);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin: 0 0 12px 0;
+}
+
+.zoom-title {
+    font-family: var(--font-main);
+    font-size: 3rem;
+    font-weight: 900;
+    margin: 0 0 16px 0;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.zoom-desc {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    opacity: 0.85;
+    margin: 0;
+}
+
+/* Premium Floating Close (X) Button */
+#skillZoomClose {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-size: 2.2rem;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
     pointer-events: all;
+    z-index: 700;
+    line-height: 0;
+    padding-bottom: 4px; /* Perfectly centers crosshair font glyph */
+}
+
+#skillZoomClose:hover {
+    background: var(--neon-pink);
+    border-color: var(--neon-pink);
+    transform: scale(1.1) rotate(90deg);
+    box-shadow: 0 0 25px rgba(255, 77, 77, 0.65);
+}
+
+/* Mobile Responsive Adapters for Skill Zoom */
+@media (max-width: 900px) {
+    #skillZoomPanel {
+        padding: 30px 20px;
+        overflow-y: auto;
+        justify-content: flex-start;
+    }
+
+    .zoom-panel-content {
+        flex-direction: column;
+        gap: 30px;
+        padding-top: 60px;
+    }
+
+    .zoom-left {
+        flex: none;
+        width: 100%;
+    }
+
+    #skillZoomImg {
+        max-width: 280px;
+    }
+
+    .zoom-right {
+        flex: none;
+        padding: 30px 24px;
+        width: 100%;
+        text-align: center;
+        transform: translateY(30px);
+    }
+
+    .zoom-title {
+        font-size: 2rem;
+    }
+
+    #skillZoomClose {
+        top: 20px;
+        right: 20px;
+        width: 48px;
+        height: 48px;
+        font-size: 1.6rem;
+    }
 }
 
 /* ------------------------------------------- */
@@ -891,11 +1034,11 @@ nav a:hover {
 }
 
 .services-image {
-    flex: 0 0 360px;
+    flex: 0 0 580px;
     text-align: right;
     position: relative;
     z-index: 10;
-    margin-right: -75px; /* Mathematically verified offset to completely eliminate transparent padding on the PNG and touch the text start */
+    margin-right: -130px; /* Mathematically verified offset to completely eliminate transparent padding on the PNG and touch the text start */
 }
 
 .services-image::before {
@@ -904,8 +1047,8 @@ nav a:hover {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 320px;
-    height: 320px;
+    width: 520px;
+    height: 520px;
     background: radial-gradient(circle, rgba(255, 77, 77, 0.12) 0%, rgba(255, 77, 77, 0) 70%);
     z-index: -1;
     pointer-events: none;
@@ -914,7 +1057,7 @@ nav a:hover {
 
 .services-image img {
     width: 100%;
-    max-width: 360px;
+    max-width: 580px;
     height: auto;
     object-fit: contain;
     border-radius: 0;
@@ -1001,6 +1144,12 @@ nav a:hover {
 
     .services-image {
         flex: none;
+        margin-right: 0; /* Reset negative margin on mobile to prevent clipping/overflow */
+        text-align: center; /* Center the character */
+    }
+
+    .services-image img {
+        margin: 0 auto; /* Center block image perfectly on mobile */
     }
 
     .services-list {
