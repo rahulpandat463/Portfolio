@@ -357,6 +357,32 @@
                 gsap.utils.toArray(".service-item").forEach(item => item.classList.add('animate'));
             }
         });
+
+        // 3D Character Entrance & Floating Animation
+        gsap.from(".services-image img", {
+            scrollTrigger: {
+                trigger: "#services",
+                start: "top 75%",
+                toggleActions: "play none none none",
+            },
+            x: -200,
+            opacity: 0,
+            rotation: -15,
+            scale: 0.8,
+            duration: 1.2,
+            ease: "back.out(1.2)",
+            onComplete: () => {
+                // Smooth continuous floating loop once entry finishes
+                gsap.to(".services-image img", {
+                    y: -12,
+                    rotation: 2,
+                    duration: 3,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut"
+                });
+            }
+        });
     </script>
 </head>
 
@@ -499,24 +525,44 @@
             </div>
             <div class="services-list">
                 <div class="service-item">
-                    <h3 style="color: var(--neon-pink); font-size: 2em; margin: 0;">01</h3>
-                    <h4 style="font-size: 1.5em; margin: 5px 0 10px 0;">Branding & Identity</h4>
-                    <p>Unique brand strategies and visual identities that resonate with your target audience.</p>
+                    <span class="service-num">01</span>
+                    <div class="service-body">
+                        <h4>Graphic Designer</h4>
+                        <p>Creative graphic design solutions tailored to your brand, helping you communicate visually
+                            and professionally.</p>
+                    </div>
                 </div>
                 <div class="service-item">
-                    <h3 style="color: var(--neon-pink); font-size: 2em; margin: 0;">02</h3>
-                    <h4 style="font-size: 1.5em; margin: 5px 0 10px 0;">3D Modeling & Animation</h4>
-                    <p>High-quality 3D assets for product visualization, marketing, and dynamic character designs.</p>
+                    <span class="service-num">02</span>
+                    <div class="service-body">
+                        <h4>Social Media Design</h4>
+                        <p>Modern and attractive social media posts, banners, and creatives designed to boost your
+                            online presence.</p>
+                    </div>
                 </div>
                 <div class="service-item">
-                    <h3 style="color: var(--neon-pink); font-size: 2em; margin: 0;">03</h3>
-                    <h4 style="font-size: 1.5em; margin: 5px 0 10px 0;">Product Design & Ads</h4>
-                    <p>Innovative product designs and compelling advertisements that drive engagement and sales.</p>
+                    <span class="service-num">03</span>
+                    <div class="service-body">
+                        <h4>Logo Design & Branding</h4>
+                        <p>Build a unique brand identity with creative logo designs and consistent branding that leaves
+                            a lasting impression.</p>
+                    </div>
                 </div>
                 <div class="service-item">
-                    <h3 style="color: var(--neon-pink); font-size: 2em; margin: 0;">04</h3>
-                    <h4 style="font-size: 1.5em; margin: 5px 0 10px 0;">Custom Graphic Design</h4>
-                    <p>Creating custom graphics for websites, print media, and merchandise (e.g., T-shirt designs).</p>
+                    <span class="service-num">04</span>
+                    <div class="service-body">
+                        <h4>Video Editing</h4>
+                        <p>Professional video editing with smooth transitions, effects, and engaging visuals to make
+                            your content stand out.</p>
+                    </div>
+                </div>
+                <div class="service-item">
+                    <span class="service-num">04</span>
+                    <div class="service-body">
+                        <h4>Thumbnail Design</h4>
+                        <p>Create eye-catching and high-converting thumbnails that grab attention and increase clicks
+                            for your videos.</p>
+                    </div>
                 </div>
             </div>
         </div>
