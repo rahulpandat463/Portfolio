@@ -667,14 +667,43 @@ nav a:hover {
     text-align: center;
 }
 
-.hero img {
-    width: 350px;
-    height: 350px;
-    object-fit: cover;
-    margin: 30px 0;
-    filter: drop-shadow(0 0 60px rgba(255, 77, 77, 0.4));
-    transition: transform 0.3s;
+.hero-image-wrapper {
+    width: 44%;
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    animation: floatAndShake 8s ease-in-out infinite;
+}
+
+.hero-character-img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 60px rgba(255, 77, 77, 0.35));
     cursor: pointer;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    will-change: transform;
+}
+
+@keyframes floatAndShake {
+    0% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-10px) rotate(0.5deg);
+    }
+    50% {
+        transform: translateY(0px) rotate(-0.5deg);
+    }
+    75% {
+        transform: translateY(10px) rotate(0.5deg);
+    }
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
 }
 
 .magnetic-btn {

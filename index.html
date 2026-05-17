@@ -409,7 +409,9 @@
         <h1 id="typing-h1">I'M SUSHIL</h1>
         <p style="font-size: 1.2em; letter-spacing: 3px;">A 3D Designer passionate about crafting bold and
             memorable projects.</p>
-        <img src="3d Model.png" alt="3D Profile Render" style="height: 100%; width: 40%;" />
+        <div class="hero-image-wrapper">
+            <img src="3d Model.png" alt="3D Profile Render" class="hero-character-img" />
+        </div>
         <a href="#contact" class="magnetic-btn">CONTACT ME</a>
     </section>
 
@@ -424,11 +426,7 @@
                     <h2 class="name-text">I am Sushil Nayak.</h2>
                     <span class="about-me-script">
                         About me
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5"
-                            style="position:absolute; top:105px; left:100px; transform: rotate(70deg); opacity: 0.6;">
-                            <path d="M12 5v14M19 12l-7 7-7-7" />
-                        </svg>
+                        <img src="arrow.jpeg" alt="Arrow Indicator" class="about-me-arrow">
                     </span>
                 </div>
                 <p class="greeting">Greetings ladies & gentlemen.</p>
@@ -483,47 +481,49 @@
     <section id="skills" class="section">
         <h2 style="color: white;">SOFTWARE & EXPERTISE</h2>
         <div class="skills-wrapper">
-            <div class="skill-card" data-skill-id="blender">
-                <img src="AE.png" alt="Blender Background" class="background-image">
-                <div class="skill-card-content">
-                    <p style="opacity: 0.7;">Video Editing</p>
-                    <h3>Adobe After Effect</h3>
-                    <p style="color: var(--neon-pink);">Specializing in Product Visualization</p>
-                </div>
-            </div>
-
             <div class="skill-card" data-skill-id="photoshop">
-                <img src="Illustator.png" alt="Photoshop Background" class="background-image">
+                <img src="Photostudio.png" alt="Photoshop Background" class="background-image">
                 <div class="skill-card-content">
-                    <p style="opacity: 0.7;">Illustrations</p>
-                    <h3>Adobe Illustrator</h3>
-                    <p style="color: var(--neon-pink);">Mastering Retouching & Compositing</p>
+                    <p style="opacity: 0.7;">Photo Editing</p>
+                    <h3>Adobe Photoshop</h3>
+                    <p style="color: var(--neon-pink);">Mastering Retouching &amp; Compositing</p>
                 </div>
             </div>
 
             <div class="skill-card" data-skill-id="illustrator">
-                <img src="AI.png" alt="Illustrator Background" class="background-image">
+                <img src="Illustator.png" alt="Illustrator Background" class="background-image">
                 <div class="skill-card-content">
                     <p style="opacity: 0.7;">Graphic Design</p>
-                    <h3>Adobe Photoshop</h3>
-                    <p style="color: var(--neon-pink);">Vector Art & Logo Development</p>
+                    <h3>Adobe Illustrator</h3>
+                    <p style="color: var(--neon-pink);">Vector Art &amp; Logo Development</p>
                 </div>
             </div>
 
-            <div class="skill-card" data-skill-id="canva">
-                <img src="Photostudio.png" alt="Canva Background" class="background-image">
-                <div class="skill-card-content">
-                    <p style="opacity: 0.7;">Photo Editing</p>
-                    <h3>Adobe PhotoStudio</h3>
-                    <p style="color: var(--neon-pink);">Fast & Efficient Asset Creation</p>
-                </div>
-            </div>
-            <div class="skill-card" data-skill-id="canva">
-                <img src="Pr.png" alt="Canva Background" class="background-image">
+            <div class="skill-card" data-skill-id="premiere">
+                <img src="Pr.png" alt="Premiere Pro Background" class="background-image">
                 <div class="skill-card-content">
                     <p style="opacity: 0.7;">Video Editing</p>
                     <h3>Adobe Premiere Pro</h3>
-                    <p style="color: var(--neon-pink);">Fast & Efficient Asset Creation</p>
+                    <p style="color: var(--neon-pink);">Professional Video Editing &amp; Sound Design</p>
+                </div>
+            </div>
+
+
+            <div class="skill-card" data-skill-id="after-effects">
+                <img src="AE.png" alt="After Effects Background" class="background-image">
+                <div class="skill-card-content">
+                    <p style="opacity: 0.7;">Motion Graphics</p>
+                    <h3>Adobe After Effects</h3>
+                    <p style="color: var(--neon-pink);">Specializing in VFX &amp; Motion Design</p>
+                </div>
+            </div>
+
+            <div class="skill-card" data-skill-id="ai-tools">
+                <img src="AI.png" alt="AI Tools Background" class="background-image">
+                <div class="skill-card-content">
+                    <p style="opacity: 0.7;">Generative Art</p>
+                    <h3>AI Tools</h3>
+                    <p style="color: var(--neon-pink);">Midjourney, ChatGPT &amp; Generative AI</p>
                 </div>
             </div>
             <div class="skill-card" data-skill-id="canva">
@@ -531,7 +531,7 @@
                 <div class="skill-card-content">
                     <p style="opacity: 0.7;">Graphic Design</p>
                     <h3>Canva</h3>
-                    <p style="color: var(--neon-pink);">Fast & Efficient Asset Creation</p>
+                    <p style="color: var(--neon-pink);">Fast &amp; Efficient Asset Creation</p>
                 </div>
             </div>
         </div>
