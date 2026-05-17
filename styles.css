@@ -802,7 +802,7 @@ nav a:hover {
     text-align: right;
     position: relative;
     z-index: 10;
-    margin-right: -45px; /* Aligns his fingers directly adjacent to the start of the service text points */
+    margin-right: -12px; /* Fine-tuned overlap to make the hand touch the text naturally without clipping */
 }
 
 .services-image::before {
@@ -829,6 +829,7 @@ nav a:hover {
     filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.5));
     transition: transform 0.5s ease;
     display: block;
+    margin-left: auto; /* Aligns the block image perfectly to the right side of the flex item */
 }
 
 .services-image img:hover {
