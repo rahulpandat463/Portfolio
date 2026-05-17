@@ -948,8 +948,6 @@ nav a:hover {
     display: flex;
     align-items: flex-start;
     gap: 28px;
-    opacity: 0;
-    transform: translateY(30px);
 }
 
 .service-item:last-child {
