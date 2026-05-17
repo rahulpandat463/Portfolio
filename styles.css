@@ -365,11 +365,20 @@ nav a:hover {
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: background 0.4s ease;
+    background: transparent;
+    transition: background 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .project-row:last-child {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.project-row:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.project-row.active {
+    background: #080808;
 }
 
 /* Header with Client Info & Button */
@@ -377,7 +386,7 @@ nav a:hover {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 40px 0;
+    padding: 40px 20px;
     width: 100%;
 }
 
@@ -389,60 +398,115 @@ nav a:hover {
 
 .project-index {
     font-size: 2.5rem;
-    /* Large numbers like the video */
     font-weight: 800;
     font-family: 'Arial Black', sans-serif;
     opacity: 0.8;
+    color: #555;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), color 0.4s;
+}
+
+.project-row:hover .project-index {
+    color: var(--neon-pink);
+    transform: scale(1.08);
 }
 
 .client-info .client-name {
     font-size: 0.8rem;
-    letter-spacing: 2px;
+    letter-spacing: 2.5px;
     opacity: 0.5;
     margin: 0;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.project-row:hover .client-name {
+    transform: translateX(8px);
 }
 
 .client-info .project-title {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 600;
     margin-top: 5px;
+    color: #ccc;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), color 0.4s;
+}
+
+.project-row:hover .project-title {
+    color: #fff;
+    transform: translateX(8px);
 }
 
 /* The Expanding Multi-Image Gallery */
 .project-images-wrapper {
     height: 0;
-    /* Hidden by default */
     opacity: 0;
     display: flex;
     gap: 20px;
-    padding-bottom: 0;
+    padding: 0 20px;
     transform: translateY(20px);
 }
 
 .project-images-wrapper img {
     flex: 1;
-    /* Images grow to fill the row */
-    height: 750px;
+    height: 600px;
     object-fit: cover;
-    border-radius: 25px;
-    /* High rounding to match video */
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.project-images-wrapper img:hover {
+    transform: scale(1.015);
 }
 
 /* Button Styling */
 .magnetic-btn {
-    /* border: 1.5px solid rgba(255,255,255,0.4); */
-    padding: 12px 30px;
+    padding: 10px 24px;
     border-radius: 50px;
     text-decoration: none;
     color: #fff;
-    font-size: 0.7rem;
-    font-weight: bold;
-    letter-spacing: 1px;
-    transition: 0.3s;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: transparent;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    display: inline-block;
+    box-shadow: none;
+}
+
+.magnetic-btn:hover {
+    background: var(--neon-pink);
+    border-color: var(--neon-pink);
+    color: #fff !important;
+    box-shadow: 0 0 20px rgba(255, 77, 77, 0.5);
+    transform: scale(1.05);
 }
 
 .project-row.active .magnetic-btn {
-    color: #000
+    color: #fff !important;
+    background: var(--neon-pink);
+    border-color: var(--neon-pink);
+    box-shadow: 0 0 15px rgba(255, 77, 77, 0.4);
+}
+
+/* Hover Cursor Floating Preview container */
+#projectFloatPreview {
+    position: fixed;
+    width: 320px;
+    height: 180px;
+    top: 0;
+    left: 0;
+    border-radius: 16px;
+    background-size: cover;
+    background-position: center;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0;
+    transform: scale(0);
+    border: 2px solid var(--neon-pink);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 77, 77, 0.25);
+    will-change: transform, opacity;
 }
 
 /* ------------------------------------------- */
