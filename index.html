@@ -9,7 +9,7 @@
 
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Poppins:wght@300;400;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Poppins:wght@300;400;600&family=Caveat:wght@600&display=swap"
         rel="stylesheet">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -91,31 +91,27 @@
             });
 
             // 4. About Section Animation (Realistic Fade-in and Slide)
-            gsap.from(".about-left img", {
-                scrollTrigger: ".about-section",
+            gsap.from(".about-text-content > *", {
+                scrollTrigger: {
+                    trigger: ".about-section-light",
+                    start: "top 80%"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                stagger: 0.15,
+                ease: "power3.out"
+            });
+
+            gsap.from(".about-image-content img", {
+                scrollTrigger: {
+                    trigger: ".about-section-light",
+                    start: "top 80%"
+                },
                 x: -100,
                 opacity: 0,
                 duration: 1.2,
-                ease: "power3.out"
-            });
-
-            gsap.from(".about-left h4, .about-left h2, .about-left p", {
-                scrollTrigger: ".about-section",
-                y: 50,
-                opacity: 0,
-                duration: 1,
-                stagger: 0.2,
                 delay: 0.3,
-                ease: "power3.out"
-            });
-
-            gsap.from(".about-box", {
-                scrollTrigger: ".about-section",
-                y: 50,
-                opacity: 0,
-                duration: 1,
-                stagger: 0.2,
-                delay: 0.6,
                 ease: "power3.out"
             });
 
@@ -135,62 +131,102 @@
                 });
             });
 
-            // 5. SKILL DETAIL PANEL ANIMATION (Video Effect - Unchanged)
-            const detailPanel = document.getElementById('skillDetailPanel');
-            const closeBtn = document.getElementById('closeDetail');
-            const detailImage = detailPanel.querySelector('.detail-image img');
-            const detailTitle = detailPanel.querySelector('#detailTitle');
-            const detailDescription = detailPanel.querySelector('#detailDescription');
-            const detailSoftware = detailPanel.querySelector('#detailSoftware');
+            // 5. SKILL CARD — HOVER TO CENTER EFFECT
+            const skillCards = document.querySelectorAll('.skill-card');
+            const zoomPanel = document.getElementById('skillZoomPanel');
+            const zoomImg = document.getElementById('skillZoomImg');
+            let isExpanded = false;
+            let activeCard = null;
 
-            const skillData = [
-                { id: 'blender', title: 'Blender 3D', movie: '3D Modeling & Rendering', image: '3d Model 4.png', description: 'Blender is my primary tool for all 3D asset creation, environment design, and complex rendering tasks. I specialize in optimized low-poly and high-detail mesh work.', software: 'Modeling, Texturing, Animation' },
-                { id: 'photoshop', title: 'Adobe Photoshop', movie: 'Digital Painting & Retouching', image: '3d Model 7.png', description: 'Expert level in photo manipulation, color grading, detailed retouching, and creating high-quality concept art for client projects and social media campaigns.', software: 'Photo Editing, Concept Art, UI Mockups' },
-                { id: 'illustrator', title: 'Adobe Illustrator', movie: 'Vector Graphics & Branding', image: '3d Model 6.png', description: 'I use Illustrator to develop scalable brand identities, logos, and intricate vector illustrations. Essential for packaging and print-ready designs.', software: 'Logo Design, Vector Illustration, Typography' },
-                { id: 'canva', title: 'Canva', movie: 'Quick Social Media Assets', image: '3d Model 5.png', description: 'For rapid prototyping and high-volume content creation for social media platforms, Canva allows for efficiency without compromising aesthetic standards.', software: 'Templates, Social Media Graphics, Presentations' },
-            ];
+            // Backdrop to catch outside clicks/leaves
+            const skillBackdrop = document.createElement('div');
+            skillBackdrop.id = 'skillBackdrop';
+            document.body.appendChild(skillBackdrop);
 
-            function openDetail(data) {
-                detailImage.src = data.image;
-                detailImage.alt = data.title;
-                detailTitle.textContent = data.title;
-                detailDescription.textContent = data.description;
-                detailSoftware.textContent = data.software;
+            function expandCard(card) {
+                // If hovering same card that's already open, do nothing
+                if (isExpanded && activeCard === card) return;
 
-                gsap.to(detailPanel, {
-                    opacity: 1,
-                    duration: 0.6,
-                    ease: "power3.inOut",
-                    onStart: () => {
-                        detailPanel.style.display = 'flex';
-                    },
-                    clipPath: "inset(0% 0% 0% 0%)"
+                const img = card.querySelector('img.background-image');
+                const rect = img.getBoundingClientRect();
+
+                // If switching to a different card while panel is open
+                if (isExpanded && activeCard !== card) {
+                    activeCard = card;
+                    zoomImg.src = img.src;
+                    gsap.fromTo(zoomImg,
+                        { scale: 0.85, opacity: 0 },
+                        { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out' }
+                    );
+                    return;
+                }
+
+                // First open
+                isExpanded = true;
+                activeCard = card;
+                zoomImg.src = img.src;
+
+                // Show the panel
+                zoomPanel.style.display = 'flex';
+                gsap.set(zoomPanel, { opacity: 1 });
+
+                // Calculate offset from card center to viewport center
+                const cardCX = rect.left + rect.width / 2;
+                const cardCY = rect.top + rect.height / 2;
+                const vpCX = window.innerWidth / 2;
+                const vpCY = window.innerHeight / 2;
+                const startX = cardCX - vpCX;
+                const startY = cardCY - vpCY;
+                const panelImgW = window.innerWidth * 0.45;
+                const startScale = Math.min(rect.width / panelImgW, 0.7);
+
+                // Animate FROM card position TO viewport center
+                gsap.fromTo(zoomImg,
+                    { x: startX, y: startY, scale: startScale, opacity: 0.9 },
+                    { x: 0, y: 0, scale: 1, opacity: 1, duration: 0.55, ease: 'power3.out' }
+                );
+
+                // Dim other cards
+                skillCards.forEach(c => {
+                    if (c !== card) gsap.to(c, { opacity: 0.15, duration: 0.35, ease: 'power2.out' });
                 });
+
+                // Show backdrop
+                skillBackdrop.style.pointerEvents = 'all';
+                gsap.to(skillBackdrop, { opacity: 1, duration: 0.35 });
             }
 
-            function closeDetail() {
-                gsap.to(detailPanel, {
-                    opacity: 0,
-                    duration: 0.6,
-                    ease: "power3.inOut",
-                    clipPath: "inset(100% 0% 0% 0%)",
-                    onComplete: () => {
-                        detailPanel.style.display = 'none';
-                    }
+            function collapseCard() {
+                if (!isExpanded) return;
+                isExpanded = false;
+                activeCard = null;
+
+                // Fade out zoom panel
+                gsap.to(zoomImg, {
+                    scale: 0.85, opacity: 0, duration: 0.3, ease: 'power2.in',
+                    onComplete: () => { zoomPanel.style.display = 'none'; }
                 });
+
+                // Restore all cards
+                skillCards.forEach(c => gsap.to(c, { opacity: 1, duration: 0.35, ease: 'power2.out' }));
+
+                // Hide backdrop
+                skillBackdrop.style.pointerEvents = 'none';
+                gsap.to(skillBackdrop, { opacity: 0, duration: 0.3 });
             }
 
-            document.querySelectorAll('.skill-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    const skillId = card.getAttribute('data-skill-id');
-                    const data = skillData.find(s => s.id === skillId);
-                    if (data) {
-                        openDetail(data);
-                    }
-                });
+            skillCards.forEach(card => {
+                const charImg = card.querySelector('img.background-image');
+                if (charImg) {
+                    charImg.addEventListener('mouseenter', () => expandCard(card));
+                }
             });
 
-            closeBtn.addEventListener('click', closeDetail);
+            // Close only when user clicks outside (the backdrop or empty panel area)
+            skillBackdrop.addEventListener('click', collapseCard);
+            zoomPanel.addEventListener('click', (e) => {
+                if (e.target !== zoomImg) collapseCard();
+            });
 
             // Typing Animation for Hero H1
             const typingText = "I'M SHUSHIL ";
@@ -228,8 +264,7 @@
             //     }
             // }
 
-            // Start typing animation after a short delay
-            setTimeout(typeWriter, 500);
+            // setTimeout(typeWriter, 500); // Fixed ReferenceError
 
             const menuToggle = document.querySelector('.menu-toggle');
             const nav = document.querySelector('nav');
@@ -348,39 +383,47 @@
         <h1 id="typing-h1">I'M SUSHIL</h1>
         <p style="font-size: 1.2em; letter-spacing: 3px;">A 3D Designer passionate about crafting bold and
             memorable projects.</p>
-        <img src="3d Model.png" alt="3D Profile Render" class="magnetic-btn" style="height: 100%; width: 40%;"/>
+        <img src="3d Model.png" alt="3D Profile Render" style="height: 100%; width: 40%;" />
         <a href="#contact" class="magnetic-btn">CONTACT ME</a>
     </section>
 
-    <section class="about-section">
-        <div class="about-card">
-
-            <!-- LEFT -->
-            <div class="about-left">
-                <img src="WhatsApp Image 2025-12-12 at 20.58.35_5d662005.jpg" alt="Profile Image">
-                <h4>Hello, I am</h4>
-                <h2>Sushil Nayak</h2>
-                <p>3D & Graphic Designer</p>
+    <section id="about" class="about-section-light">
+        <div class="about-container-light">
+            <div class="about-image-content">
+                <img src="WhatsApp Image 2025-12-12 at 20.58.35_5d662005.jpg" alt="Sushil Nayak">
             </div>
-
-            <!-- RIGHT -->
-            <div class="about-right">
-
-                <div class="about-box full">
-                    <h1>About Me</h1>
-                    <h3>
-                        I’m a passionate Graphic & 3D Designer focused on creating clean,
-                        bold and meaningful visuals. I love transforming ideas into
-                        visually engaging designs that leave a strong impact.
-                    </h3>
+            <div class="about-text-content">
+                <h1 class="hello-text">Hello!</h1>
+                <div class="name-row">
+                    <h2 class="name-text">I am Sushil Nayak.</h2>
+                    <span class="about-me-script">
+                        About me
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5"
+                            style="position:absolute; top:35px; left:20px; transform: rotate(70deg); opacity: 0.6;">
+                            <path d="M12 5v14M19 12l-7 7-7-7" />
+                        </svg>
+                    </span>
                 </div>
+                <p class="greeting">Greetings ladies & gentlemen.</p>
+                <p class="description">
+                    Creative Graphic Designer and Video
+                    Editor specializing in YouTube
+                    thumbnails, social media graphics, and
+                    engaging video content. Experienced in
+                    transforming ideas into visually
+                    compelling designs and edits that attract
+                    viewers and improve content
+                    performance.
 
-                <div class="about-box">
-                    <h1>Education</h1>
-                    <h4>
-                        Diploma / Degree in Graphic Design<br>
-                        Self-taught 3D Artist & Visual Designer
-                    </h4>
+                </p>
+
+                <div class="hire-card">
+                    <div class="hire-info">
+                        <img src="WhatsApp Image 2025-12-12 at 20.58.35_5d662005.jpg" alt="Avatar" class="hire-avatar">
+                        <span>Sushil is available for hire</span>
+                    </div>
+                    <a href="#contact" class="hire-btn">Hire Him</a>
                 </div>
             </div>
         </div>
@@ -390,60 +433,52 @@
         <h2 style="color: white;">SOFTWARE & EXPERTISE</h2>
         <div class="skills-wrapper">
             <div class="skill-card" data-skill-id="blender">
-                <img src="3d Model 4.png" alt="Blender Background" class="background-image">
+                <img src="AE.png" alt="Blender Background" class="background-image">
                 <div class="skill-card-content">
-                    <p style="opacity: 0.7;">3D Modeling</p>
-                    <h3>Blender 3D</h3>
+                    <p style="opacity: 0.7;">Video Editing</p>
+                    <h3>Adobe After Effect</h3>
                     <p style="color: var(--neon-pink);">Specializing in Product Visualization</p>
                 </div>
             </div>
 
             <div class="skill-card" data-skill-id="photoshop">
-                <img src="3d Model 7.png" alt="Photoshop Background" class="background-image">
+                <img src="Illustator.png" alt="Photoshop Background" class="background-image">
                 <div class="skill-card-content">
-                    <p style="opacity: 0.7;">Graphic Design</p>
-                    <h3>Adobe Photoshop</h3>
+                    <p style="opacity: 0.7;">Illustrations</p>
+                    <h3>Adobe Illustrator</h3>
                     <p style="color: var(--neon-pink);">Mastering Retouching & Compositing</p>
                 </div>
             </div>
 
             <div class="skill-card" data-skill-id="illustrator">
-                <img src="3d Model 6.png" alt="Illustrator Background" class="background-image">
+                <img src="AI.png" alt="Illustrator Background" class="background-image">
                 <div class="skill-card-content">
-                    <p style="opacity: 0.7;">Branding</p>
-                    <h3>Adobe Illustrator</h3>
+                    <p style="opacity: 0.7;">Graphic Design</p>
+                    <h3>Adobe Photoshop</h3>
                     <p style="color: var(--neon-pink);">Vector Art & Logo Development</p>
                 </div>
             </div>
 
             <div class="skill-card" data-skill-id="canva">
-                <img src="3d Model 3 (1).png" alt="Canva Background" class="background-image">
+                <img src="Photostudio.png" alt="Canva Background" class="background-image">
                 <div class="skill-card-content">
-                    <p style="opacity: 0.7;">Social Media</p>
-                    <h3>Canva</h3>
+                    <p style="opacity: 0.7;">Photo Editing</p>
+                    <h3>Adobe PhotoStudio</h3>
                     <p style="color: var(--neon-pink);">Fast & Efficient Asset Creation</p>
                 </div>
             </div>
             <div class="skill-card" data-skill-id="canva">
-                <img src="3d Model 2.png" alt="Canva Background" class="background-image">
+                <img src="Pr.png" alt="Canva Background" class="background-image">
                 <div class="skill-card-content">
-                    <p style="opacity: 0.7;">Social Media</p>
-                    <h3>Canva</h3>
+                    <p style="opacity: 0.7;">Video Editing</p>
+                    <h3>Adobe Premiere Pro</h3>
                     <p style="color: var(--neon-pink);">Fast & Efficient Asset Creation</p>
                 </div>
             </div>
             <div class="skill-card" data-skill-id="canva">
-                <img src="3d Model 5.png" alt="Canva Background" class="background-image">
+                <img src="Canva.png" alt="Canva Background" class="background-image">
                 <div class="skill-card-content">
-                    <p style="opacity: 0.7;">Social Media</p>
-                    <h3>Canva</h3>
-                    <p style="color: var(--neon-pink);">Fast & Efficient Asset Creation</p>
-                </div>
-            </div>
-            <div class="skill-card" data-skill-id="canva">
-                <img src="3d Model 8 (1).png" alt="Canva Background" class="background-image">
-                <div class="skill-card-content">
-                    <p style="opacity: 0.7;">Social Media</p>
+                    <p style="opacity: 0.7;">Graphic Design</p>
                     <h3>Canva</h3>
                     <p style="color: var(--neon-pink);">Fast & Efficient Asset Creation</p>
                 </div>
@@ -451,22 +486,9 @@
         </div>
     </section>
 
-    <div id="skillDetailPanel" class="skill-detail-panel" style="display: none;">
-        <span id="closeDetail" class="close-btn">X</span>
-        <div class="detail-content">
-            <div class="detail-image">
-                <img id="detailImage" src="" alt="Skill Image" />
-            </div>
-
-            <div class="detail-text">
-                <p style="font-size: 1.2em; opacity: 0.7; margin-bottom: 5px;">3D & Graphic Design Tool</p>
-                <h3 id="detailTitle">Software Name</h3>
-                <p style="font-size: 1.1em; color: var(--neon-pink);">Areas of Expertise: <span
-                        id="detailSoftware">Loading...</span></p>
-                <p id="detailDescription">This is where the detailed description of the software and your proficiency
-                    will go. It explains your deep expertise in using the tool for various professional projects.</p>
-            </div>
-        </div>
+    <!-- Skill Zoom Panel -->
+    <div id="skillZoomPanel">
+        <img id="skillZoomImg" src="" alt="">
     </div>
 
     <section id="services" class="section">
@@ -541,7 +563,7 @@
         <div class="project-row" onclick="toggleProject(this)">
             <div class="project-header">
                 <div class="project-details">
-                    <span class="project-index">02</span>
+                    <span class="project-index">03</span>
                     <div class="client-info">
                         <p class="client-name">CLIENT: Neon Brand</p>
                         <p class="project-title">Social Media Graphics</p>
@@ -558,7 +580,7 @@
         <div class="project-row" onclick="toggleProject(this)">
             <div class="project-header">
                 <div class="project-details">
-                    <span class="project-index">02</span>
+                    <span class="project-index">04</span>
                     <div class="client-info">
                         <p class="client-name">CLIENT: Neon Brand</p>
                         <p class="project-title">Social Media Graphics</p>
