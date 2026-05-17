@@ -272,6 +272,17 @@
             menuToggle.addEventListener('click', () => {
                 nav.classList.toggle('active');
             });
+
+            // Bind click events on all project rows cleanly in JS
+            document.querySelectorAll('.project-row').forEach(row => {
+                row.addEventListener('click', (e) => {
+                    // Prevent default anchor behavior and page jumps when clicking the live project link
+                    if (e.target.closest('.magnetic-btn')) {
+                        e.preventDefault();
+                    }
+                    toggleProject(row);
+                });
+            });
         });
         function toggleProject(element) {
             const allRows = document.querySelectorAll('.project-row');
@@ -667,7 +678,7 @@
     <section id="portfolio">
         <h2 style="font-size: 5rem; margin-bottom: 50px;">PROJECTS</h2>
 
-        <div class="project-row" onclick="toggleProject(this)">
+        <div class="project-row">
             <div class="project-header">
                 <div class="project-details">
                     <span class="project-index">01</span>
@@ -685,7 +696,7 @@
             </div>
         </div>
 
-        <div class="project-row" onclick="toggleProject(this)">
+        <div class="project-row">
             <div class="project-header">
                 <div class="project-details">
                     <span class="project-index">02</span>
@@ -702,7 +713,7 @@
                 <img src="PHLIPS.jpg" alt="Preview 1">
             </div>
         </div>
-        <div class="project-row" onclick="toggleProject(this)">
+        <div class="project-row">
             <div class="project-header">
                 <div class="project-details">
                     <span class="project-index">03</span>
@@ -719,7 +730,7 @@
                 <img src="farilife.jpg" alt="Preview 1">
             </div>
         </div>
-        <div class="project-row" onclick="toggleProject(this)">
+        <div class="project-row">
             <div class="project-header">
                 <div class="project-details">
                     <span class="project-index">04</span>
