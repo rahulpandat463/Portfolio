@@ -789,7 +789,7 @@ nav a:hover {
     text-align: right;
     position: relative;
     z-index: 10;
-    margin-right: -40px; /* Pulls the fingers exactly onto the vertical line */
+    margin-right: -45px; /* Aligns his fingers directly adjacent to the start of the service text points */
 }
 
 .services-image::before {
@@ -827,8 +827,7 @@ nav a:hover {
     display: flex;
     flex-direction: column;
     gap: 0;
-    border-left: 3px solid rgba(255, 255, 255, 0.08);
-    padding-left: 60px; /* Creates clean breathing room so the fingers don't overlap the text */
+    padding-left: 15px; /* Tiny, tight padding so the text starts right next to his hand */
     position: relative;
 }
 
@@ -846,20 +845,6 @@ nav a:hover {
     transform: translateY(30px);
 }
 
-/* Glowing Neon segment on the vertical border line held by the character */
-.service-item::before {
-    content: '';
-    position: absolute;
-    left: -63px; /* Perfectly aligned on top of the list's left border (60px padding + 3px border) */
-    top: 0;
-    width: 3px;
-    height: 0%;
-    background: var(--neon-pink);
-    box-shadow: 0 0 10px var(--neon-pink);
-    transition: height 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-    z-index: 5;
-}
-
 .service-item:last-child {
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
@@ -872,10 +857,6 @@ nav a:hover {
 .service-item:hover {
     padding-left: 16px;
     border-top-color: var(--neon-pink);
-}
-
-.service-item:hover::before {
-    height: 100%;
 }
 
 .service-item:hover .service-num {
