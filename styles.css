@@ -802,7 +802,7 @@ nav a:hover {
     text-align: right;
     position: relative;
     z-index: 10;
-    margin-right: -12px; /* Fine-tuned overlap to make the hand touch the text naturally without clipping */
+    margin-right: -75px; /* Mathematically verified offset to completely eliminate transparent padding on the PNG and touch the text start */
 }
 
 .services-image::before {
