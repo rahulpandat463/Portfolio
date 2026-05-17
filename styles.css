@@ -778,15 +778,18 @@ nav a:hover {
 .services-container {
     display: flex;
     align-items: center;
-    gap: 80px;
+    gap: 0;
     max-width: 1200px;
     width: 100%;
+    position: relative;
 }
 
 .services-image {
-    flex: 0 0 380px;
-    text-align: center;
+    flex: 0 0 360px;
+    text-align: right;
     position: relative;
+    z-index: 10;
+    margin-right: -14px; /* Perfectly aligns hand on top of services-list border-left */
 }
 
 .services-image::before {
@@ -797,7 +800,7 @@ nav a:hover {
     transform: translate(-50%, -50%);
     width: 320px;
     height: 320px;
-    background: radial-gradient(circle, rgba(255, 77, 77, 0.15) 0%, rgba(255, 77, 77, 0) 70%);
+    background: radial-gradient(circle, rgba(255, 77, 77, 0.12) 0%, rgba(255, 77, 77, 0) 70%);
     z-index: -1;
     pointer-events: none;
     filter: blur(20px);
@@ -805,18 +808,18 @@ nav a:hover {
 
 .services-image img {
     width: 100%;
-    max-width: 380px;
+    max-width: 360px;
     height: auto;
     object-fit: contain;
-    /* Remove box - transparent PNG floats freely */
     border-radius: 0;
     box-shadow: none;
     filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.5));
     transition: transform 0.5s ease;
+    display: block;
 }
 
 .services-image img:hover {
-    transform: scale(1.04) translateY(-8px);
+    transform: scale(1.03) translateY(-6px);
 }
 
 .services-list {
@@ -824,6 +827,9 @@ nav a:hover {
     display: flex;
     flex-direction: column;
     gap: 0;
+    border-left: 3px solid rgba(255, 255, 255, 0.08);
+    padding-left: 55px;
+    position: relative;
 }
 
 .service-item {
@@ -840,6 +846,20 @@ nav a:hover {
     transform: translateY(30px);
 }
 
+/* Glowing Neon segment on the vertical border line held by the character */
+.service-item::before {
+    content: '';
+    position: absolute;
+    left: -58px; /* Perfectly aligned on top of the list's left border (55px padding + 3px border) */
+    top: 0;
+    width: 3px;
+    height: 0%;
+    background: var(--neon-pink);
+    box-shadow: 0 0 10px var(--neon-pink);
+    transition: height 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 5;
+}
+
 .service-item:last-child {
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
@@ -852,6 +872,10 @@ nav a:hover {
 .service-item:hover {
     padding-left: 16px;
     border-top-color: var(--neon-pink);
+}
+
+.service-item:hover::before {
+    height: 100%;
 }
 
 .service-item:hover .service-num {
