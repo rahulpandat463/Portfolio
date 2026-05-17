@@ -789,7 +789,7 @@ nav a:hover {
     text-align: right;
     position: relative;
     z-index: 10;
-    margin-right: -95px; /* Deep overlap to place his hand exactly on top of the list's border line */
+    margin-right: -40px; /* Pulls the fingers exactly onto the vertical line */
 }
 
 .services-image::before {
@@ -828,7 +828,7 @@ nav a:hover {
     flex-direction: column;
     gap: 0;
     border-left: 3px solid rgba(255, 255, 255, 0.08);
-    padding-left: 25px;
+    padding-left: 60px; /* Creates clean breathing room so the fingers don't overlap the text */
     position: relative;
 }
 
@@ -850,7 +850,7 @@ nav a:hover {
 .service-item::before {
     content: '';
     position: absolute;
-    left: -28px; /* Perfectly aligned on top of the list's left border (25px padding + 3px border) */
+    left: -63px; /* Perfectly aligned on top of the list's left border (60px padding + 3px border) */
     top: 0;
     width: 3px;
     height: 0%;
