@@ -149,6 +149,19 @@ nav a:hover {
     transform: rotate(-10deg);
 }
 
+.about-me-arrow {
+    position: absolute;
+    width: 60px;
+    height: auto;
+    top: 42px;
+    left: 45px;
+    transform: scaleX(-1) rotate(15deg);
+    opacity: 0.85;
+    mix-blend-mode: multiply; /* Blends the white background seamlessly into the section beige */
+    filter: contrast(500%) brightness(110%); /* High contrast key out for any grey checkboard grid pixels */
+    pointer-events: none;
+}
+
 .greeting {
     font-size: 1.3rem;
     font-weight: 600;
