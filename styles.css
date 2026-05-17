@@ -789,7 +789,7 @@ nav a:hover {
     text-align: right;
     position: relative;
     z-index: 10;
-    margin-right: -14px; /* Perfectly aligns hand on top of services-list border-left */
+    margin-right: -95px; /* Deep overlap to place his hand exactly on top of the list's border line */
 }
 
 .services-image::before {
