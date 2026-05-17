@@ -251,6 +251,93 @@ nav a:hover {
     }
 }
 
+/* About Details Grid (Education & Certifications) */
+.about-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 50px;
+    text-align: left;
+}
+
+.details-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.details-title {
+    font-family: var(--font-main);
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: #111;
+    letter-spacing: 2px;
+    margin: 0 0 10px 0;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.details-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    position: relative;
+    padding-left: 15px;
+    border-left: 2px solid rgba(255, 77, 77, 0.3);
+    transition: border-left-color 0.3s ease;
+}
+
+.details-item:hover {
+    border-left-color: var(--neon-pink);
+}
+
+.details-year {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--neon-pink);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.details-name {
+    font-family: var(--font-secondary);
+    font-size: 1rem;
+    font-weight: 600;
+    color: #222;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    line-height: 1.4;
+}
+
+.pursuing-badge {
+    background: rgba(255, 77, 77, 0.1);
+    color: var(--neon-pink);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.details-sub {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Responsive adjustment for About details */
+@media (max-width: 768px) {
+    .about-details-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
+
 /* PROJECT SECTION STYLING */
 #portfolio {
     background: #000;
