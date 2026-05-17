@@ -285,16 +285,29 @@
             });
         });
         function toggleProject(element) {
-            console.log("toggleProject invoked for:", element);
             const allRows = document.querySelectorAll('.project-row');
             const isAlreadyActive = element.classList.contains('active');
-            console.log("isAlreadyActive:", isAlreadyActive);
 
-            // 1. Reset all rows (Collapse others)
-            allRows.forEach((row, idx) => {
-                row.classList.remove('active');
-                const wrapper = row.querySelector('.project-images-wrapper');
-                console.log(`Collapsing row ${idx}, wrapper:`, wrapper);
+            // 1. Reset and collapse only the OTHER rows
+            allRows.forEach(row => {
+                if (row !== element) {
+                    row.classList.remove('active');
+                    const wrapper = row.querySelector('.project-images-wrapper');
+                    gsap.to(wrapper, {
+                        height: 0,
+                        opacity: 0,
+                        y: 20,
+                        paddingBottom: 0,
+                        duration: 0.6,
+                        ease: "power4.inOut"
+                    });
+                }
+            });
+
+            // 2. Toggle the clicked row
+            if (isAlreadyActive) {
+                element.classList.remove('active');
+                const wrapper = element.querySelector('.project-images-wrapper');
                 gsap.to(wrapper, {
                     height: 0,
                     opacity: 0,
@@ -303,13 +316,9 @@
                     duration: 0.6,
                     ease: "power4.inOut"
                 });
-            });
-
-            // 2. Open the clicked row
-            if (!isAlreadyActive) {
+            } else {
                 element.classList.add('active');
                 const wrapper = element.querySelector('.project-images-wrapper');
-                console.log("Expanding wrapper:", wrapper);
 
                 // Expand the container
                 gsap.to(wrapper, {

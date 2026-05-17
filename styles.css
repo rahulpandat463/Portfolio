@@ -435,7 +435,6 @@ nav a:hover {
     transform: translateX(8px);
 }
 
-/* The Expanding Multi-Image Gallery */
 .project-images-wrapper {
     height: 0;
     opacity: 0;
@@ -443,6 +442,7 @@ nav a:hover {
     gap: 20px;
     padding: 0 20px;
     transform: translateY(20px);
+    overflow: hidden;
 }
 
 .project-images-wrapper img {
