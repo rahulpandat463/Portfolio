@@ -285,13 +285,16 @@
             });
         });
         function toggleProject(element) {
+            console.log("toggleProject invoked for:", element);
             const allRows = document.querySelectorAll('.project-row');
             const isAlreadyActive = element.classList.contains('active');
+            console.log("isAlreadyActive:", isAlreadyActive);
 
             // 1. Reset all rows (Collapse others)
-            allRows.forEach(row => {
+            allRows.forEach((row, idx) => {
                 row.classList.remove('active');
                 const wrapper = row.querySelector('.project-images-wrapper');
+                console.log(`Collapsing row ${idx}, wrapper:`, wrapper);
                 gsap.to(wrapper, {
                     height: 0,
                     opacity: 0,
@@ -306,6 +309,7 @@
             if (!isAlreadyActive) {
                 element.classList.add('active');
                 const wrapper = element.querySelector('.project-images-wrapper');
+                console.log("Expanding wrapper:", wrapper);
 
                 // Expand the container
                 gsap.to(wrapper, {
