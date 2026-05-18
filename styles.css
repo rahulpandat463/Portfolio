@@ -29,7 +29,7 @@ body {
 /* HEADER & NAVIGATION (UNCHANGED) */
 /* ------------------------------------------- */
 header {
-    position: fixed;
+    position: relative;
     top: 0;
     left: 0;
     right: 0;
@@ -881,6 +881,10 @@ nav a:hover {
     -webkit-text-stroke: 1px var(--white);
     color: transparent;
     text-align: center;
+}
+
+.hero {
+    padding-top: 30px;
 }
 
 .hero-image-wrapper {
